@@ -1,3 +1,6 @@
+// ch01_08_align_spacer_expanded
+// 배치 및 공간 제어 위젯 작성
+
 import 'package:flutter/material.dart';
 
 class MyHomePage extends StatelessWidget {
@@ -11,34 +14,161 @@ class MyHomePage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Flutter App Bar'),
       ),
-      body: Container(
-        margin: const EdgeInsets.symmetric(vertical: 50, horizontal: 100),
-        color: Colors.green,
+      body: Row(
+        children: [
+          Container(
+            color: Colors.yellow,
+            height: 40,
+            width: 40,
+          ),
+          Container(
+            color: Colors.green,
+            height: 40,
+            width: 40,
+          ),
+          Container(
+            color: Colors.blue,
+            height: 40,
+            width: 40,
+          ),
+          Container(
+            color: Colors.pink,
+            child: const Text('어떤 값이 들어올지 몰라'),
+          ),
+          const Expanded(
+            child: Text('fdafdsfsdadfdsfsdafadsfaddsfasdf'),
+          ),
+          Container(
+            color: Colors.purple,
+            height: 40,
+            width: 40,
+          ),
+        ],
       ),
-      // 1. padding
-      // Padding(
-      //   padding: const EdgeInsets.all(100.0),
+      // 1. Align
+      // 아래 3개 코드는 다 동일(아래로 내려갈수록 자율성이 높다.)
+      // Center(
       //   child: Container(
       //     color: Colors.yellow,
+      //     height: 200,
+      //     width: 200,
       //   ),
       // ),
-      // 2. margin
-      // 3. EdgeInsetsGeometry type
-      // 여백 값을 없애고 싶을 때
-      // margin: EdgeInsets.zero,
-
-      // left, top, right, bottom 동일한 여백값을 주고 싶을 때
-      // margin: const EdgeInsets.all(40),
-
-      // left, top, right, bottom 각기 다른 값을 주고 싶을 때
-      // margin: const EdgeInsets.fromLTRB(10, 70, 80, 100),
-
-      // left, top, right, bottom 원하는 값만 여백을 주고 싶을 때
-      // margin: const EdgeInsets.only(bottom: 100),
-      // margin: const EdgeInsets.only(bottom: 100, top: 20),
-
-      // 가로, 세로 별로 여백을 주고 싶을 때
-      // margin: const EdgeInsets.symmetric(vertical: 50, horizontal: 100),
+      //  Align(
+      //   alignment: const Alignment(0, 0),
+      //   alignment: Alignment.center,
+      //   child: Container(
+      //     color: Colors.yellow,
+      //     height: 200,
+      //     width: 200,
+      //   ),
+      // ),
+      // 2. Spacer(여백)
+      // (1)
+      // Row(
+      //   children: [
+      //     Container(
+      //       color: Colors.yellow,
+      //       height: 40,
+      //       width: 40,
+      //     ),
+      //     Container(
+      //       color: Colors.green,
+      //       height: 40,
+      //       width: 40,
+      //     ),
+      //     const Spacer(),
+      //     Container(
+      //       color: Colors.blue,
+      //       height: 40,
+      //       width: 40,
+      //     ),
+      //     const Spacer(),
+      //     Container(
+      //       color: Colors.pink,
+      //       height: 40,
+      //       width: 40,
+      //     ),
+      //     const Spacer(),
+      //     Container(
+      //       color: Colors.purple,
+      //       height: 40,
+      //       width: 40,
+      //     ),
+      //   ],
+      // ),
+      // 2. (2) flex
+      // = flex값 / flex 총합
+      // Row(
+      //   children: [
+      //     Container(
+      //       color: Colors.yellow,
+      //       height: 40,
+      //       width: 40,
+      //     ),
+      //     Container(
+      //       color: Colors.green,
+      //       height: 40,
+      //       width: 40,
+      //     ),
+      //     const Spacer(
+      //       flex: 1,
+      //     ),
+      //     Container(
+      //       color: Colors.blue,
+      //       height: 40,
+      //       width: 40,
+      //     ),
+      //     const Spacer(
+      //       flex: 1,
+      //     ),
+      //     Container(
+      //       color: Colors.pink,
+      //       height: 40,
+      //       width: 40,
+      //     ),
+      //     const Spacer(
+      //       flex: 3,
+      //     ),
+      //     Container(
+      //       color: Colors.purple,
+      //       height: 40,
+      //       width: 40,
+      //     ),
+      //   ],
+      // ),
+      // 3. Expanded(나머지 영역 안에서 위젯을 그리고 싶을 때)
+      // Row(
+      //   children: [
+      //     Container(
+      //       color: Colors.yellow,
+      //       height: 40,
+      //       width: 40,
+      //     ),
+      //     Container(
+      //       color: Colors.green,
+      //       height: 40,
+      //       width: 40,
+      //     ),
+      //     Container(
+      //       color: Colors.blue,
+      //       height: 40,
+      //       width: 40,
+      //     ),
+      //     Container(
+      //       color: Colors.pink,
+      //       child: const Text('어떤 값이 들어올지 몰라'),
+      //     ),
+      //     const Expanded(
+      //       child: Text('fdafdsfsdadfdsfsdafadsfaddsfasdf'),
+      //     ),
+      //     Container(
+      //       color: Colors.purple,
+      //       height: 40,
+      //       width: 40,
+      //     ),
+      //   ],
+      // ),
     );
   }
 }
