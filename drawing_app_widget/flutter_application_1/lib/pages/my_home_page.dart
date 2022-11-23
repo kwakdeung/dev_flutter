@@ -1,5 +1,5 @@
-// ch01_10_stateful_widget
-// 정적인 화면 말고 동적인 화면 그리기
+// ch01_11_floatingactionbutton
+// 플로팅 버튼 작성
 
 import 'package:flutter/material.dart';
 
@@ -21,6 +21,17 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: const Text('Flutter App Bar'),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          setState(() {
+            count++;
+          });
+        },
+        child: const Icon(
+          Icons.plus_one,
+          color: Colors.white,
+        ),
+      ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -37,23 +48,8 @@ class _MyHomePageState extends State<MyHomePage> {
           Center(
             child: Text('$count'),
           ),
-          Junyeong(),
         ],
       ),
     );
-  }
-}
-
-class Junyeong extends StatefulWidget {
-  const Junyeong({super.key});
-
-  @override
-  State<Junyeong> createState() => _JunyeongState();
-}
-
-class _JunyeongState extends State<Junyeong> {
-  @override
-  Widget build(BuildContext context) {
-    return Text('dd');
   }
 }
