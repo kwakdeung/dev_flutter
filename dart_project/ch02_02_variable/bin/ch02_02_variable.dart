@@ -1,3 +1,5 @@
+// ch02_02_variable
+
 void main() {}
 
 void basic1Variable() {
@@ -17,6 +19,12 @@ void basic1Variable() {
     'tags': ['saturn'],
     'url': '//path/to/saturn.jpg'
   }; // Map 값
+
+  print(name);
+  print(year);
+  print(antennaDiameter);
+  print(flybyObjects);
+  print(image);
 }
 
 void basic2String() {
@@ -33,7 +41,7 @@ void basic2String() {
 
 void basic3NumberType() {
   // 2. 변수 타입
-  // 숫자값 = 정수(int), 실수(doublem, 소수점 0)
+  // 숫자값 = 정수(int), 실수(double, 소수점 0)
 
   int num1 = 3;
   int num2 = 2;
