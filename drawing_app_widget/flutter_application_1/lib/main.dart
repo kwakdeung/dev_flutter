@@ -13,25 +13,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.grey,
+        primarySwatch: Colors.orange,
       ),
       home: const MyHomePage(),
     );
   }
 }
-
-// class _MyPrivatePage extends StatelessWidget {
-//   const _MyPrivatePage({
-//     Key? key,
-//   }) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: const Text('Flutter App Bar'),
-//       ),
-//       body: const Text('Flutter My Home page'),
-//     );
-//   }
-// }
