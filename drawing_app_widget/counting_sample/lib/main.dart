@@ -1,6 +1,7 @@
-// ch02_02_material_android_style_widget_explanation
-// 머터리얼 안드로이드 스타일 위젯 설명
+// ch02_03_cupertino_ios_style_widget_explanation
+// 쿠퍼티노 iOS 스타일 위젯 설명
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -36,53 +37,22 @@ class _ImageHomePageState extends State<_ImageHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('${_text.text}'),
-      ),
+      appBar: CupertinoNavigationBar(middle: Text('hi')),
       body: Center(
-        child: TextField(
-          controller: _text,
+        child: CupertinoSearchTextField(
+          prefixIcon: Icon(CupertinoIcons.add),
         ),
       ),
     );
   }
-  // 머터리얼 안드로이드 스타일 위젯 설명
-  // 1. bottomNavigationBar
-  // int _index = 2;
+  // 1. CupertinoActivityIndicator
+  // CupertinoActivityIndicator(),
   //
-  // bottomNavigationBar: BottomNavigationBar(
-  //       currentIndex: _index,
-  //       onTap: (value) => setState(() {
-  //         _index = value;
-  //       }),
-  //       items: const <BottomNavigationBarItem>[
-  //         BottomNavigationBarItem(icon: Icon(Icons.star), label: 'star'),
-  //         BottomNavigationBarItem(
-  //             icon: Icon(Icons.access_alarm), label: 'access_alarm'),
-  //         BottomNavigationBarItem(
-  //             icon: Icon(Icons.settings), label: 'settings'),
-  //       ],
-  //     ),
+  // 2. CupertinoNavigationBar
+  // appBar: CupertinoNavigationBar(middle: Text('hi')),
   //
-  // 2. Slider
-  // double _slider = 0.3;
-  //
-  // Slider(
-  //         value: _slider,
-  //         onChanged: ((value) => setState(() {
-  //               _slider = value;
-  //             })),
-  //       ),
-  //
-  // 3. TextField
-  // Scaffold(
-  //     appBar: AppBar(
-  //       title: Text('${_text.text}'),
-  //     ),
-  //     body: Center(
-  //       child: TextField(
-  //         controller: _text,
-  //       ),
-  //     ),
-  //   );
+  // 3. CupertinoSearchTextField
+  // CupertinoSearchTextField(controller: ,
+  //  prefixIcon: Icon(CupertinoIcons.add),
+  // ),
 }
