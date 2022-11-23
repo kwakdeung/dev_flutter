@@ -1,5 +1,5 @@
-// ch01_14_assetimage_networkimage
-// 이미지 출력 위젯 작성
+// ch02_01_remainder_existing_widget_explanation
+// 나머지 기존 위젯 설명
 
 import 'package:flutter/material.dart';
 
@@ -29,41 +29,72 @@ class _ImageHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Image.asset(
-              'assets/images/image.jpeg',
-              width: 300,
-              height: 300,
-              fit: BoxFit.none,
-            ),
-          ],
-        ),
+      appBar: AppBar(
+        title: const Text('title'),
+      ),
+      body: const Center(
+        child: Placeholder(),
       ),
     );
-    // 1. asset(로컬 이미지 표시)
-    // - pub.yaml 파일 입력
-    // - 단일 파일 인식, 폴더 인식하는 것 차이 설명
-    // Image.asset('assets/images/image.jpeg'),
-    // Image.asset('assets/images/image3.jpeg'),
-    // Image.asset('assets/images/image2.gif'),
-    //
-    // 2. network(네트워크 이미지 표시)
-    // - 플러터가 이미지 파일을 다운로드해서 캐시에 저장하고 화면에 띄움
-    // asset 이미지보다 로딩이 느림
-    // 인터넷 연결 필요
-    // Image.network(
-    //             'https://thumbs.gfycat.com/ArcticSameGoldenmantledgroundsquirrel-size_restricted.gif'),
-    // Image.network(
-    //             'https://storage.googleapis.com/jjalbot/2021/12/h-ckJpdv5/h-ckJpdv5.jpeg'),
-    //
-    // 3. file(파일 이미지 표시)
-    // - 외부 폴더나 갤러리에 있는 이미지를 가져올 땐 File type
-    // Image.file(file),
-    // # 공통된 속성
-    // - width, height
-    // - BoxFit
   }
+  // AppBar
+  // appBar: AppBar(
+  //   title: const Text('AppBar Demo'),
+  //   actions: <Widget>[
+  //     IconButton(
+  //       icon: const Icon(Icons.add_alert),
+  //       tooltip: 'Show Snackbar',
+  //       onPressed: () {
+  //         ScaffoldMessenger.of(context).showSnackBar(
+  //             const SnackBar(content: Text('This is a snackbar')));
+  //       },
+  //     ),
+  //     IconButton(
+  //       icon: const Icon(Icons.navigate_next),
+  //       tooltip: 'Go to the next page',
+  //       onPressed: () {
+  //         Navigator.push(context, MaterialPageRoute<void>(
+  //           builder: (BuildContext context) {
+  //             return Scaffold(
+  //               appBar: AppBar(
+  //                 title: const Text('Next page'),
+  //               ),
+  //               body: const Center(
+  //                 child: Text(
+  //                   'This is the next page',
+  //                   style: TextStyle(fontSize: 24),
+  //                 ),
+  //               ),
+  //             );
+  //           },
+  //         ));
+  //       },
+  //     ),
+  //   ],
+  // ),
+  //
+  // FlutterLogo
+  // FlutterLogo(
+  //   size: 300,
+  // ),
+  // Icon
+  // Icon(
+  //         Icons.star,
+  //         size: 200,
+  //       ),
+  //
+  // Image
+  // Image(
+  //  image: AssetImage(),
+  // )
+  // Image(
+  //  image: NetworkImage(),
+  // )
+  //
+  // Placeholder
+  // 다른 위젯이 언젠가 추가될 위치를 나타내는 상자를 그리는 위젯
+  // 개발 중에 인터페이스가 아직 완료되지 않았음을 나타내는 데 유용함.
+  // Placeholder(),
+  //
+  // Scaffold: 머터리얼 디자인 시각적 레이아웃 구조
 }
