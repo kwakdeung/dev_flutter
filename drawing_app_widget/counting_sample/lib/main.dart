@@ -1,8 +1,11 @@
-// ch02_03_cupertino_ios_style_widget_explanation
-// 쿠퍼티노 iOS 스타일 위젯 설명
+// ch02_05_Navigator
+// Navigator 이용헤 화면 전환 해보기
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import 'pages/page1.dart';
+import 'pages/page2.dart';
+import 'pages/page3.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,42 +20,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.pink,
       ),
-      home: const _ImageHomePage(),
+      home: const Page1(),
     );
   }
-}
-
-class _ImageHomePage extends StatefulWidget {
-  const _ImageHomePage({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  State<_ImageHomePage> createState() => _ImageHomePageState();
-}
-
-class _ImageHomePageState extends State<_ImageHomePage> {
-  final TextEditingController _text = TextEditingController();
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: CupertinoNavigationBar(middle: Text('hi')),
-      body: Center(
-        child: CupertinoSearchTextField(
-          prefixIcon: Icon(CupertinoIcons.add),
-        ),
-      ),
-    );
-  }
-  // 1. CupertinoActivityIndicator
-  // CupertinoActivityIndicator(),
-  //
-  // 2. CupertinoNavigationBar
-  // appBar: CupertinoNavigationBar(middle: Text('hi')),
-  //
-  // 3. CupertinoSearchTextField
-  // CupertinoSearchTextField(controller: ,
-  //  prefixIcon: Icon(CupertinoIcons.add),
-  // ),
 }
