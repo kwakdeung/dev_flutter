@@ -11,114 +11,34 @@ class MyHomePage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Flutter App Bar'),
       ),
-      // 4. Stack
-      body: Stack(
-        alignment: Alignment.center,
-        children: [
-          Container(
-            color: Colors.red,
-            alignment: Alignment.center,
-            width: 100,
-            height: 200,
-            child: const Text(
-              '1',
-            ),
-          ),
-          Container(
-            color: Colors.green,
-            alignment: Alignment.center,
-            width: 100,
-            height: 100,
-            child: const Text(
-              '3',
-            ),
-          ),
-          Container(
-            color: Colors.yellow,
-            alignment: Alignment.center,
-            width: 100,
-            height: 50,
-            child: const Text(
-              '2',
-            ),
-          ),
-        ],
+      body: Container(
+        margin: const EdgeInsets.symmetric(vertical: 50, horizontal: 100),
+        color: Colors.green,
       ),
-      // 1. Column
-      // Column(
-      //   children: [
-      //     Container(
-      //       color: Colors.yellow,
-      //       height: 300,
-      //       child: const Text(
-      //         'Flutter My Home page',
-      //       ),
-      //     ),
-      //     Container(
-      //       color: Colors.green,
-      //       height: 300,
-      //       child: const Text(
-      //         'Flutter My Home page',
-      //       ),
-      //     ),
-      //   ],
+      // 1. padding
+      // Padding(
+      //   padding: const EdgeInsets.all(100.0),
+      //   child: Container(
+      //     color: Colors.yellow,
+      //   ),
       // ),
-      // 2. Row
-      // Row(
-      //   children: [
-      //     Container(
-      //       color: Colors.red,
-      //       height: 100,
-      //       child: const Text(
-      //         'Flutter My Home page',
-      //       ),
-      //     ),
-      //     Container(
-      //       color: Colors.yellow,
-      //       height: 40,
-      //       child: const Text(
-      //         'Flutter My Home page',
-      //       ),
-      //     ),
-      //     Container(
-      //       color: Colors.green,
-      //       height: 100,
-      //       child: const Text(
-      //         'Flutter My Home page',
-      //       ),
-      //     ),
-      //   ],
-      // ),
-      // 3. Wrap
-      // Wrap(
-      //   direction: Axis.vertical,
-      //   children: [
-      //     Container(
-      //       color: Colors.red,
-      //       width: 100,
-      //       height: 300,
-      //       child: const Text(
-      //         '1',
-      //       ),
-      //     ),
-      //     Container(
-      //       color: Colors.yellow,
-      //       width: 100,
-      //       height: 300,
-      //       child: const Text(
-      //         '2',
-      //       ),
-      //     ),
-      //     Container(
-      //       color: Colors.green,
-      //       width: 100,
-      //       height: 300,
-      //       child: const Text(
-      //         '3',
-      //       ),
-      //     ),
-      //   ],
-      // ),
+      // 2. margin
+      // 3. EdgeInsetsGeometry type
+      // 여백 값을 없애고 싶을 때
+      // margin: EdgeInsets.zero,
+
+      // left, top, right, bottom 동일한 여백값을 주고 싶을 때
+      // margin: const EdgeInsets.all(40),
+
+      // left, top, right, bottom 각기 다른 값을 주고 싶을 때
+      // margin: const EdgeInsets.fromLTRB(10, 70, 80, 100),
+
+      // left, top, right, bottom 원하는 값만 여백을 주고 싶을 때
+      // margin: const EdgeInsets.only(bottom: 100),
+      // margin: const EdgeInsets.only(bottom: 100, top: 20),
+
+      // 가로, 세로 별로 여백을 주고 싶을 때
+      // margin: const EdgeInsets.symmetric(vertical: 50, horizontal: 100),
     );
   }
 }
