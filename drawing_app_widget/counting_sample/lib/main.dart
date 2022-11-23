@@ -1,5 +1,5 @@
-// ch01_12_counting_sample_app_code_explanation
-// 카운팅 샘플 APP 코드 설명
+// ch01_13_constructor
+// 위젯간 데이터 전달(생성자)
 
 import 'package:flutter/material.dart';
 
@@ -17,54 +17,45 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.pink,
       ),
       home: const MyHomePage(
-        title: 'Flutter Demo Home',
+        name: 'Junyeong',
+        title: 'title',
       ),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+  const MyHomePage({
+    Key? key,
+    required this.title,
+    required this.name,
+  }) : super(key: key);
 
   final String title;
+  final String name;
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
+      appBar: AppBar(),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
+          children: [
+            Text(
+              'Hello ${widget.title}!',
+              style: Theme.of(context).textTheme.headline4,
             ),
             Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
+              'Hello ${widget.name} World',
             ),
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
       ),
     );
   }
