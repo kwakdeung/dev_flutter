@@ -1,8 +1,13 @@
 // ch01_02_follow_the_package_usage_procedure
 // 패키지 사용 절차 따라해보기
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+
+import '../main.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -31,20 +36,44 @@ class _HomePageState extends State<HomePage> {
         children: [
           ElevatedButton(
             onPressed: () {
-              // 1.
-              // Fluttertoast.showToast(
-              //   msg: "안녕!",
-              //   toastLength: Toast.LENGTH_SHORT,
-              //   gravity: ToastGravity.CENTER,
-              //   timeInSecForIosWeb: 1,
-              //   backgroundColor: Colors.blue,
-              //   textColor: Colors.white,
-              //   fontSize: 20.0,
-              // );
-              // 2.
               _showToast();
             },
             child: const Text('btn'),
+          ),
+          ElevatedButton(
+            onPressed: () async {
+              final notification = FlutterLocalNotificationsPlugin();
+              const android = AndroidNotificationDetails(
+                '0',
+                '알림 테스트',
+                channelDescription: '알림 테스트 바디 부분',
+                importance: Importance.max,
+                priority: Priority.max,
+              );
+              const ios = DarwinNotificationDetails();
+              const detail = NotificationDetails(
+                android: android,
+                iOS: ios,
+              );
+              final permission = Platform.isAndroid
+                  ? true
+                  : await notification
+                          .resolvePlatformSpecificImplementation<
+                              IOSFlutterLocalNotificationsPlugin>()
+                          ?.requestPermissions(
+                              alert: true, badge: true, sound: true) ??
+                      false;
+              if (!permission) {
+                print(permission);
+              }
+              await flutterLocalNotificationsPlugin.show(
+                0,
+                'plain title',
+                'plain body',
+                detail,
+              );
+            },
+            child: const Text('add alarm'),
           ),
           const Center(child: Text('hi')),
         ],
