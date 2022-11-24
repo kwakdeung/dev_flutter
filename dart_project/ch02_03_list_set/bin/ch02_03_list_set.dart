@@ -1,4 +1,6 @@
-void main(List<String> arguments) {}
+// ch02_03_list_set
+
+void main() {}
 
 void basic1List() {
   // list
