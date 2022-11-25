@@ -7,6 +7,7 @@ import 'package:help_dory/pages/add_medicine/add_alarm_page.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../components/dory_contants.dart';
+import '../../components/dory_widgets.dart';
 import 'components/add_page_widget.dart';
 
 class AddMedicinePage extends StatefulWidget {
@@ -165,23 +166,17 @@ class PickImageBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Padding(
-        padding: pagePadding,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            TextButton(
-              onPressed: onPressedCamera,
-              child: const Text('카메라로 촬영'),
-            ),
-            TextButton(
-              onPressed: onPressedGallery,
-              child: const Text('앨범에서 가져오기'),
-            ),
-          ],
+    return BottomSheetBody(
+      children: [
+        TextButton(
+          onPressed: onPressedCamera,
+          child: const Text('카메라로 촬영'),
         ),
-      ),
+        TextButton(
+          onPressed: onPressedGallery,
+          child: const Text('앨범에서 가져오기'),
+        ),
+      ],
     );
   }
 }
