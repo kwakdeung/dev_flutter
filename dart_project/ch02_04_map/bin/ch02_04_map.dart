@@ -1,3 +1,4 @@
+// ch02_04_map
 void main() {}
 
 void basic1Map() {
@@ -18,9 +19,9 @@ void basic1Map() {
   print('------');
 
   Map<String, dynamic> joinInputForm = {
-    'name': 'Bora',
-    'age': 24,
-    'height': 170.5,
+    'name': 'Junyeong',
+    'age': 30,
+    'height': 173.5,
     'bool': true,
     'list': [true, true, true, true],
     'phone': '010 - 1234 - 1234',
@@ -36,12 +37,12 @@ void basic2MapCUD() {
     'key2': 'value2',
     'key3': 'value3',
   };
-  map['key3'] = 'Bora';
+  map['key3'] = 'Junyeong';
   print(map);
 
 // key 값 할당
 // key 값 없다? = 선언 insert
-  map['name'] = 'Bora';
+  map['name'] = 'Junyeong';
   print(map);
   print(map['name']);
 
@@ -56,11 +57,11 @@ void basic2MapCUD() {
   print(map['name']);
 }
 
-void basic2Operator() {
+void basic3Operator() {
   Map<String, dynamic> joinInputForm = {
-    'name': 'Bora',
-    'age': 24,
-    'height': 170.5,
+    'name': 'Junyeong',
+    'age': 30,
+    'height': 173.5,
     'phone': '010 - 1234 - 1234',
   };
 
