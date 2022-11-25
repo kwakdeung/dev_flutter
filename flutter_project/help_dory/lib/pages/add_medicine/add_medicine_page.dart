@@ -2,6 +2,8 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:help_dory/components/dory_page_route.dart';
+import 'package:help_dory/pages/add_medicine/add_alarm_page.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../components/dory_contants.dart';
@@ -15,6 +17,7 @@ class AddMedicinePage extends StatefulWidget {
 
 class _AddMedicinePageState extends State<AddMedicinePage> {
   final TextEditingController _nameController = TextEditingController();
+  File? _medicineImage;
 
   @override
   void dispose() {
@@ -45,8 +48,12 @@ class _AddMedicinePageState extends State<AddMedicinePage> {
                 Container(
                   margin: const EdgeInsets.only(
                       top: largeSpace, bottom: largeSpace + regularSpace),
-                  child: const Center(
-                    child: MedicineImageButton(),
+                  child: Center(
+                    child: MedicineImageButton(
+                      changeImageFile: (File? value) {
+                        _medicineImage = value;
+                      },
+                    ),
                   ),
                 ),
                 Text(
@@ -64,6 +71,9 @@ class _AddMedicinePageState extends State<AddMedicinePage> {
                     hintStyle: Theme.of(context).textTheme.bodyText2,
                     contentPadding: textFieldContentPadding,
                   ),
+                  onChanged: (_) {
+                    setState(() {});
+                  },
                 ),
               ],
             ),
@@ -76,7 +86,7 @@ class _AddMedicinePageState extends State<AddMedicinePage> {
           child: SizedBox(
             height: submitButtonHeight,
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: _nameController.text.isEmpty ? null : _onAddAlarmPage,
               style: ElevatedButton.styleFrom(
                 textStyle: Theme.of(context).textTheme.subtitle1,
               ),
@@ -87,10 +97,27 @@ class _AddMedicinePageState extends State<AddMedicinePage> {
       ),
     );
   }
+
+  void _onAddAlarmPage() {
+    Navigator.push(
+      context,
+      FadePageRoute(
+        page: AddAlarmPage(
+          medicineImage: _medicineImage,
+          medicineName: _nameController.text,
+        ),
+      ),
+    );
+  }
 }
 
 class MedicineImageButton extends StatefulWidget {
-  const MedicineImageButton({super.key});
+  final ValueChanged<File?> changeImageFile;
+
+  const MedicineImageButton({
+    super.key,
+    required this.changeImageFile,
+  });
 
   @override
   State<MedicineImageButton> createState() => _MedicineImageButtonState();
@@ -137,6 +164,7 @@ class _MedicineImageButtonState extends State<MedicineImageButton> {
       if (xfile != null) {
         setState(() {
           _pickImage = File(xfile.path);
+          widget.changeImageFile(_pickImage);
         });
       }
       Navigator.maybePop(context);
