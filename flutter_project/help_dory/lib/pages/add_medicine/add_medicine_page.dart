@@ -33,61 +33,103 @@ class _AddMedicinePageState extends State<AddMedicinePage> {
         onTap: () {
           FocusScope.of(context).unfocus();
         },
-        child: Padding(
-          padding: pagePadding,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                '어떤 약이에요?',
-                style: Theme.of(context).textTheme.headline4,
-              ),
-              Container(
-                margin: const EdgeInsets.only(
-                    top: largeSpace, bottom: largeSpace + regularSpace),
-                child: Center(
-                  child: CircleAvatar(
-                    radius: 40,
-                    child: CupertinoButton(
-                      padding: _pickImage == null ? null : EdgeInsets.zero,
-                      onPressed: () {
-                        ImagePicker()
-                            .pickImage(source: ImageSource.gallery)
-                            .then((xfile) {
-                          if (xfile == null) return;
-                          setState(() {
-                            _pickImage = File(xfile.path);
-                          });
-                        });
-                      },
-                      child: _pickImage == null
-                          ? const Icon(CupertinoIcons.photo_camera_solid,
-                              size: 30, color: Colors.white)
-                          : CircleAvatar(
-                              foregroundImage: FileImage(_pickImage!),
-                              radius: 40,
-                            ),
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: pagePadding,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  '어떤 약이에요?',
+                  style: Theme.of(context).textTheme.headline4,
+                ),
+                Container(
+                  margin: const EdgeInsets.only(
+                      top: largeSpace, bottom: largeSpace + regularSpace),
+                  child: Center(
+                    child: CircleAvatar(
+                      radius: 40,
+                      child: CupertinoButton(
+                        padding: _pickImage == null ? null : EdgeInsets.zero,
+                        onPressed: () {
+                          showModalBottomSheet(
+                              context: context,
+                              builder: (context) {
+                                return SafeArea(
+                                  child: Padding(
+                                    padding: pagePadding,
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        TextButton(
+                                            onPressed: () {
+                                              ImagePicker()
+                                                  .pickImage(
+                                                      source:
+                                                          ImageSource.camera)
+                                                  .then((xfile) {
+                                                if (xfile != null) {
+                                                  setState(() {
+                                                    _pickImage =
+                                                        File(xfile.path);
+                                                  });
+                                                }
+                                                Navigator.maybePop(context);
+                                              });
+                                            },
+                                            child: const Text('카메라로 촬영')),
+                                        TextButton(
+                                            onPressed: () {
+                                              ImagePicker()
+                                                  .pickImage(
+                                                      source:
+                                                          ImageSource.gallery)
+                                                  .then((xfile) {
+                                                if (xfile != null) {
+                                                  setState(() {
+                                                    _pickImage =
+                                                        File(xfile.path);
+                                                  });
+                                                }
+                                                Navigator.maybePop(context);
+                                              });
+                                            },
+                                            child: const Text('앨범에서 가져오기')),
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              });
+                        },
+                        child: _pickImage == null
+                            ? const Icon(CupertinoIcons.photo_camera_solid,
+                                size: 30, color: Colors.white)
+                            : CircleAvatar(
+                                foregroundImage: FileImage(_pickImage!),
+                                radius: 40,
+                              ),
+                      ),
                     ),
                   ),
                 ),
-              ),
-              Text(
-                '약 이름',
-                style: Theme.of(context).textTheme.subtitle1,
-              ),
-              TextFormField(
-                controller: _nameController,
-                maxLength: 20,
-                keyboardType: TextInputType.text,
-                textInputAction: TextInputAction.done,
-                style: Theme.of(context).textTheme.bodyText1,
-                decoration: InputDecoration(
-                  hintText: '복용할 약 이름을 기입해주세요.',
-                  hintStyle: Theme.of(context).textTheme.bodyText2,
-                  contentPadding: textFieldContentPadding,
+                Text(
+                  '약 이름',
+                  style: Theme.of(context).textTheme.subtitle1,
                 ),
-              ),
-            ],
+                TextFormField(
+                  controller: _nameController,
+                  maxLength: 20,
+                  keyboardType: TextInputType.text,
+                  textInputAction: TextInputAction.done,
+                  style: Theme.of(context).textTheme.bodyText1,
+                  decoration: InputDecoration(
+                    hintText: '복용할 약 이름을 기입해주세요.',
+                    hintStyle: Theme.of(context).textTheme.bodyText2,
+                    contentPadding: textFieldContentPadding,
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
