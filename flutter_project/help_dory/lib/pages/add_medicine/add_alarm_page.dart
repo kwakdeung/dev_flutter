@@ -6,25 +6,17 @@ import 'package:help_dory/components/dory_colors.dart';
 import 'package:help_dory/components/dory_contants.dart';
 import 'package:help_dory/components/dory_widgets.dart';
 import 'package:intl/intl.dart';
+import '../../services/add_medicine_service.dart';
 import 'components/add_page_widget.dart';
 
-class AddAlarmPage extends StatefulWidget {
+class AddAlarmPage extends StatelessWidget {
   final File? medicineImage;
   final String medicineName;
 
-  const AddAlarmPage(
+  AddAlarmPage(
       {super.key, required this.medicineImage, required this.medicineName});
 
-  @override
-  State<AddAlarmPage> createState() => _AddAlarmPageState();
-}
-
-class _AddAlarmPageState extends State<AddAlarmPage> {
-  final _alarms = <String>{
-    '08:00',
-    '13:00',
-    '19:00',
-  };
+  final service = AddMedicineService();
 
   @override
   Widget build(BuildContext context) {
@@ -40,15 +32,13 @@ class _AddAlarmPageState extends State<AddAlarmPage> {
             height: largeSpace,
           ),
           Expanded(
-            child: ListView(
-              children: alarmWidgets,
-              // children: const [
-              //   AlarmBox(),
-              //   AlarmBox(),
-              //   AlarmBox(),
-              //   AddAlarmButton(),
-              // ],
-            ),
+            child: AnimatedBuilder(
+                animation: service,
+                builder: (context, _) {
+                  return ListView(
+                    children: alarmWidgets,
+                  );
+                }),
           ),
         ],
       ),
@@ -62,25 +52,15 @@ class _AddAlarmPageState extends State<AddAlarmPage> {
   List<Widget> get alarmWidgets {
     final children = <Widget>[];
     children.addAll(
-      _alarms.map(
+      service.alarms.map(
         (alarmTime) => AlarmBox(
           time: alarmTime,
-          onPressedMinus: () {
-            setState(() {
-              _alarms.remove(alarmTime);
-            });
-          },
+          service: service,
         ),
       ),
     );
     children.add(AddAlarmButton(
-      onPressed: () {
-        final now = DateTime.now();
-        final nowTime = DateFormat('HH:mm').format(now);
-        setState(() {
-          _alarms.add(nowTime);
-        });
-      },
+      service: service,
     ));
     return children;
   }
@@ -88,24 +68,24 @@ class _AddAlarmPageState extends State<AddAlarmPage> {
 
 class AlarmBox extends StatelessWidget {
   final String time;
-  final VoidCallback onPressedMinus;
+  final AddMedicineService service;
 
   const AlarmBox({
     Key? key,
     required this.time,
-    required this.onPressedMinus,
+    required this.service,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final initTime = DateFormat('HH:mm').parse(time);
-
     return Row(
       children: [
         Expanded(
           flex: 1,
           child: IconButton(
-            onPressed: onPressedMinus,
+            onPressed: () {
+              service.removeAlarm(time);
+            },
             icon: const Icon(CupertinoIcons.minus_circle),
           ),
         ),
@@ -120,7 +100,8 @@ class AlarmBox extends StatelessWidget {
                 context: context,
                 builder: (context) {
                   return TimePickerBottomSheet(
-                    initialDateTime: initTime,
+                    initialTime: time,
+                    service: service,
                   );
                 },
               );
@@ -133,22 +114,30 @@ class AlarmBox extends StatelessWidget {
   }
 }
 
+// ignore: must_be_immutable
 class TimePickerBottomSheet extends StatelessWidget {
-  final DateTime initialDateTime;
+  final String initialTime;
+  final AddMedicineService service;
 
-  const TimePickerBottomSheet({
+  TimePickerBottomSheet({
     Key? key,
-    required this.initialDateTime,
+    required this.initialTime,
+    required this.service,
   }) : super(key: key);
+
+  DateTime? _setDateTime;
 
   @override
   Widget build(BuildContext context) {
+    final initialDateTime = DateFormat('HH:mm').parse(initialTime);
     return BottomSheetBody(
       children: [
         SizedBox(
           height: 200,
           child: CupertinoDatePicker(
-            onDateTimeChanged: (dateTime) {},
+            onDateTimeChanged: (dateTime) {
+              _setDateTime = dateTime;
+            },
             mode: CupertinoDatePickerMode.time,
             initialDateTime: initialDateTime,
           ),
@@ -167,7 +156,9 @@ class TimePickerBottomSheet extends StatelessWidget {
                         backgroundColor: Colors.white,
                         foregroundColor: DoryColors.primaryColor,
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
                       child: Text('취소'))),
             ),
             const SizedBox(
@@ -180,7 +171,13 @@ class TimePickerBottomSheet extends StatelessWidget {
                       style: ElevatedButton.styleFrom(
                         textStyle: Theme.of(context).textTheme.subtitle1,
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        service.setAlarm(
+                          initialTime,
+                          _setDateTime ?? initialDateTime,
+                        );
+                        Navigator.pop(context);
+                      },
                       child: Text('선택'))),
             ),
           ],
@@ -191,11 +188,11 @@ class TimePickerBottomSheet extends StatelessWidget {
 }
 
 class AddAlarmButton extends StatelessWidget {
-  final VoidCallback onPressed;
+  final AddMedicineService service;
 
   const AddAlarmButton({
     Key? key,
-    required this.onPressed,
+    required this.service,
   }) : super(key: key);
 
   @override
@@ -205,7 +202,7 @@ class AddAlarmButton extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 6),
         textStyle: Theme.of(context).textTheme.subtitle1,
       ),
-      onPressed: onPressed,
+      onPressed: service.addNowAlarm,
       child: Row(
         children: const [
           Expanded(
