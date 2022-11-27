@@ -1,4 +1,6 @@
-void main(List<String> arguments) {}
+// ch02_05_nullable_final_const
+
+void main() {}
 
 void basic1VarDynamicType() {
   // var = 타입 추론 가능한 타입
@@ -10,7 +12,7 @@ void basic1VarDynamicType() {
   name = 'sdfsdf';
 
   // dynamic = 여러 타입을 받을 수 있는 변수 타입
-  dynamic varTest = 'Bora';
+  dynamic varTest = 'Junyeong';
   varTest = 3;
   varTest = 3.2;
   varTest = true;
@@ -28,7 +30,7 @@ void basic2EmptyNull() {
   String? name; // 빈값
   print(name);
 
-  name = 'bora';
+  name = 'Junyeong';
   print(name);
 
   name = null; // 널값 Null
@@ -38,7 +40,7 @@ void basic2EmptyNull() {
 void basic3FinalConst() {
   // final 상수 : 변치 않는 데이터 (run-time 때 값이 할당)
   // const 상수 : 변치 않는 데이터 (compile-time 때 값이 할당)
-  const String name = 'Bora';
+  const String name = 'Junyeong';
   print(name);
 
   final DateTime now1 = DateTime.now();
