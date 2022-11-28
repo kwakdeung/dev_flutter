@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:help_dory/components/dory_colors.dart';
 import 'package:help_dory/components/dory_contants.dart';
 import 'package:help_dory/components/dory_widgets.dart';
+import 'package:help_dory/main.dart';
 import 'package:intl/intl.dart';
+import 'package:permission_handler/permission_handler.dart';
 import '../../services/add_medicine_service.dart';
 import 'components/add_page_widget.dart';
 
@@ -43,7 +45,24 @@ class AddAlarmPage extends StatelessWidget {
         ],
       ),
       bottomNavigationBar: BottomSubmitButton(
-        onPressed: () {},
+        onPressed: () async {
+          bool result = false;
+
+          // 1. add alarm
+          for (var alarm in service.alarms) {
+            result = await notification.addNotifcication(
+              alarmTimeStr: alarm,
+              title: '$alarm 약 먹을 시간이예요!',
+              body: '$medicineName 복약했다고 알려주세요!',
+            );
+          }
+
+          if (!result) {
+            return showPermissionDenied(context, permission: '알람');
+          }
+          // 2. save image (local dir)
+          // 3. add medicine model (local DB, hive)
+        },
         text: '완료',
       ),
     );

@@ -1,9 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:help_dory/components/dory_themes.dart';
+import 'package:help_dory/services/dory_notification_service.dart';
 
 import 'pages/home_page.dart';
 
+final notification = DoryNotificationService();
+
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  notification.initializeTimeZone();
+  notification.initializeNotification();
+
   runApp(const MyApp());
 }
 
