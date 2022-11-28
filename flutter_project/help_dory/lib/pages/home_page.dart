@@ -1,12 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:help_dory/components/dory_colors.dart';
-import 'package:help_dory/pages/add_medicine/add_medicine_page.dart';
-import 'package:help_dory/pages/history/history_page.dart';
-import 'package:help_dory/pages/today/today_page.dart';
+
+import '../components/dory_colors.dart';
+import '../components/dory_constants.dart';
+import 'add_medicine/add_medicine_page.dart';
+import 'history/history_page.dart';
+import 'today/today_page.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  const HomePage({Key? key}) : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -15,28 +17,23 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _currentIndex = 0;
   final _pages = [
-    TodayPage(),
-    HistoryPage(),
+    const TodayPage(),
+    const HistoryPage(),
   ];
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.white,
-      child: SafeArea(
-        top: false,
-        child: Scaffold(
-          appBar: AppBar(),
-          body: _pages[_currentIndex],
-          floatingActionButton: FloatingActionButton(
-            onPressed: _onAddMedicine,
-            child: const Icon(CupertinoIcons.add),
-          ),
-          floatingActionButtonLocation:
-              FloatingActionButtonLocation.centerDocked,
-          bottomNavigationBar: _buildBottomAppBar(),
-        ),
+    return Scaffold(
+      body: Padding(
+        padding: pagePadding,
+        child: SafeArea(child: _pages[_currentIndex]),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _onAddMedicine,
+        child: const Icon(CupertinoIcons.add),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      bottomNavigationBar: _buildBottomAppBar(),
     );
   }
 
@@ -49,27 +46,23 @@ class _HomePageState extends State<HomePage> {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             CupertinoButton(
-                child: Icon(
-                  CupertinoIcons.checkmark,
-                  color: _currentIndex == 0
-                      ? DoryColors.primaryColor
-                      : Colors.grey[350],
-                ),
-                onPressed: () {
-                  _onCurrentPage(0);
-                }),
+              onPressed: () => _onCurrentPage(0),
+              child: Icon(
+                CupertinoIcons.checkmark,
+                color: _currentIndex == 0
+                    ? DoryColors.primaryColor
+                    : Colors.grey[350],
+              ),
+            ),
             CupertinoButton(
-                child: Icon(
-                  CupertinoIcons.text_badge_checkmark,
-                  color: _currentIndex == 1
-                      ? DoryColors.primaryColor
-                      : Colors.grey[350],
-                ),
-                onPressed: () {
-                  setState(() {
-                    _onCurrentPage(1);
-                  });
-                }),
+              onPressed: () => _onCurrentPage(1),
+              child: Icon(
+                CupertinoIcons.text_badge_checkmark,
+                color: _currentIndex == 1
+                    ? DoryColors.primaryColor
+                    : Colors.grey[350],
+              ),
+            ),
           ],
         ),
       ),
@@ -85,9 +78,7 @@ class _HomePageState extends State<HomePage> {
   void _onAddMedicine() {
     Navigator.push(
       context,
-      MaterialPageRoute(
-        builder: (context) => const AddMedicinePage(),
-      ),
+      MaterialPageRoute(builder: (contxt) => const AddMedicinePage()),
     );
   }
 }

@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -36,7 +37,12 @@ class DoryNotificationService {
     );
   }
 
+  String alarmId(int medicineId, String alarmTime) {
+    return medicineId.toString() + alarmTime.replaceAll(':', '');
+  }
+
   Future<bool> addNotifcication({
+    required int medicineId,
     required String alarmTimeStr,
     required String title, // HH:mm 약 먹을 시간이예요!
     required String body, // {약이름} 복약했다고 알려주세요!
@@ -55,7 +61,7 @@ class DoryNotificationService {
         : now.day;
 
     /// id
-    final alarmTimeId = alarmTimeStr.replaceAll(':', '');
+    String alarmTimeId = alarmId(medicineId, alarmTimeStr);
 
     /// add schedule notification
     final details = _notificationDetails(
@@ -81,7 +87,9 @@ class DoryNotificationService {
       uiLocalNotificationDateInterpretation:
           UILocalNotificationDateInterpretation.absoluteTime,
       matchDateTimeComponents: DateTimeComponents.time,
+      payload: alarmTimeId,
     );
+    log('[notification list] ${await pendingNotificationIds}');
 
     return true;
   }
@@ -118,5 +126,21 @@ class DoryNotificationService {
     } else {
       return false;
     }
+  }
+
+  Future<void> deleteMultipleAlarm(Iterable<String> alarmIds) async {
+    log('[before delete notification list] ${await pendingNotificationIds}');
+    for (final alarmId in alarmIds) {
+      final id = int.parse(alarmId);
+      await notification.cancel(id);
+    }
+    log('[after delete notification list] ${await pendingNotificationIds}');
+  }
+
+  Future<List<int>> get pendingNotificationIds {
+    final list = notification
+        .pendingNotificationRequests()
+        .then((value) => value.map((e) => e.id).toList());
+    return list;
   }
 }

@@ -1,80 +1,46 @@
 import 'package:flutter/material.dart';
-import 'package:help_dory/components/dory_themes.dart';
-import 'package:help_dory/services/dory_notification_service.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
+import 'components/dory_themes.dart';
 import 'pages/home_page.dart';
+import 'repositories/dory_hive.dart';
+import 'repositories/medicine_history_repository.dart';
+import 'repositories/medicine_repository.dart';
+import 'services/dory_notification_serivce.dart';
 
 final notification = DoryNotificationService();
+final hive = DoryHive();
+final medicineRepository = MedicineRepository();
+final historyRepository = MedicineHistoryRepository();
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  notification.initializeTimeZone();
-  notification.initializeNotification();
+  await initializeDateFormatting();
+
+  await notification.initializeTimeZone();
+  await notification.initializeNotification();
+
+  await hive.initializeHive();
 
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
       theme: DoryThemes.lightTheme,
-      home: HomePage(),
-      builder: ((context, child) => MediaQuery(
-            data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
-            child: child!,
-          )),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: const TextStyle(fontWeight: FontWeight.w400, fontSize: 40),
-            ),
-          ],
+      home: const HomePage(),
+      builder: (context, child) => MediaQuery(
+        child: GestureDetector(
+          onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+          child: child!,
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
+        data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
       ),
     );
   }

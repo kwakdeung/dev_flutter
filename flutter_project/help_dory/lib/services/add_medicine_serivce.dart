@@ -1,7 +1,21 @@
 import 'package:flutter/foundation.dart';
 import 'package:intl/intl.dart';
 
+import '../main.dart';
+
 class AddMedicineService with ChangeNotifier {
+  AddMedicineService(int updateMedicineId) {
+    final isUpdate = updateMedicineId != -1;
+    if (isUpdate) {
+      final updateAlarms = medicineRepository.medicineBox.values
+          .singleWhere((medicine) => medicine.id == updateMedicineId)
+          .alarms;
+
+      _alarms.clear();
+      _alarms.addAll(updateAlarms);
+    }
+  }
+
   final _alarms = <String>{
     '08:00',
     '13:00',
@@ -23,11 +37,12 @@ class AddMedicineService with ChangeNotifier {
     notifyListeners();
   }
 
-  void setAlarm(String prevTime, DateTime setTime) {
+  void setAlarm({required String prevTime, required DateTime setTime}) {
     _alarms.remove(prevTime);
 
     final setTimeStr = DateFormat('HH:mm').format(setTime);
     _alarms.add(setTimeStr);
+
     notifyListeners();
   }
 }

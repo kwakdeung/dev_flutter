@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:help_dory/components/dory_colors.dart';
+
+import 'dory_colors.dart';
 
 class DoryThemes {
   static ThemeData get lightTheme => ThemeData(
@@ -12,7 +13,7 @@ class DoryThemes {
         brightness: Brightness.light,
       );
 
-  static ThemeData get darkTheme => ThemeData(
+  static ThemeData get dartTheme => ThemeData(
         primarySwatch: DoryColors.primaryMeterialColor,
         fontFamily: 'GmarketSansTTF',
         splashColor: Colors.white,
