@@ -1,5 +1,5 @@
 import 'package:dory/components/dory_colors.dart';
-import 'package:dory/pages/add/add_page.dart';
+import 'package:dory/pages/add/add_medicine_page.dart';
 import 'package:dory/pages/history/history_page.dart';
 import 'package:dory/pages/today/today_page.dart';
 import 'package:flutter/cupertino.dart';
@@ -30,7 +30,7 @@ class _HomePageState extends State<HomePage> {
           appBar: AppBar(),
           body: _pages[_currentIndex],
           floatingActionButton: FloatingActionButton(
-            onPressed: _onAddMedicien,
+            onPressed: _onAddMedicine,
             child: const Icon(CupertinoIcons.add),
           ),
           floatingActionButtonLocation:
@@ -78,8 +78,8 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  void _onAddMedicien() {
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => const AddPage()));
+  void _onAddMedicine() {
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => const AddMedicinePage()));
   }
 }
