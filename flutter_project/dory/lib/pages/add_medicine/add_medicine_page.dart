@@ -7,6 +7,7 @@ import 'package:image_picker/image_picker.dart';
 
 import '../../components/dory_constants.dart';
 import '../../components/dory_page_route.dart';
+import 'components/add_page_widget.dart';
 
 class AddMedicinePage extends StatefulWidget {
   const AddMedicinePage({super.key});
@@ -31,72 +32,49 @@ class _AddMedicinePageState extends State<AddMedicinePage> {
       appBar: AppBar(
         leading: const CloseButton(),
       ),
-      body: GestureDetector(
-        onTap: () {
-          FocusScope.of(context).unfocus();
-        },
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: pagePadding,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  '어떤 약이에요?',
-                  style: Theme.of(context).textTheme.headline4,
-                ),
-                Container(
-                  margin: const EdgeInsets.only(
-                      top: largeSpace, bottom: largeSpace + regularSpace),
-                  child: Center(
-                    child: MedicineImageButton(
-                      changeImageFile: (File? value) {
-                        _medicineImage = value;
-                      },
-                    ),
-                  ),
-                ),
-                Text(
-                  '약 이름',
-                  style: Theme.of(context).textTheme.subtitle1,
-                ),
-                TextFormField(
-                  controller: _nameController,
-                  maxLength: 20,
-                  keyboardType: TextInputType.text,
-                  textInputAction: TextInputAction.done,
-                  style: Theme.of(context).textTheme.bodyText1,
-                  decoration: InputDecoration(
-                    hintText: '복용할 약 이름을 기입해주세요.',
-                    hintStyle: Theme.of(context).textTheme.bodyText2,
-                    contentPadding: textFieldContentPadding,
-                  ),
-                  onChanged: (_) {
-                    setState(() {});
+      body: SingleChildScrollView(
+        child: AddPageBody(
+          children: [
+            Text(
+              '어떤 약이에요?',
+              style: Theme.of(context).textTheme.headline4,
+            ),
+            Container(
+              margin: const EdgeInsets.only(
+                  top: largeSpace, bottom: largeSpace + regularSpace),
+              child: Center(
+                child: MedicineImageButton(
+                  changeImageFile: (File? value) {
+                    _medicineImage = value;
                   },
                 ),
-              ],
+              ),
             ),
-          ),
+            Text(
+              '약 이름',
+              style: Theme.of(context).textTheme.subtitle1,
+            ),
+            TextFormField(
+              controller: _nameController,
+              maxLength: 20,
+              keyboardType: TextInputType.text,
+              textInputAction: TextInputAction.done,
+              style: Theme.of(context).textTheme.bodyText1,
+              decoration: InputDecoration(
+                hintText: '복용할 약 이름을 기입해주세요.',
+                hintStyle: Theme.of(context).textTheme.bodyText2,
+                contentPadding: textFieldContentPadding,
+              ),
+              onChanged: (_) {
+                setState(() {});
+              },
+            ),
+          ],
         ),
       ),
-      bottomNavigationBar: SafeArea(
-        child: Padding(
-          padding: submitButtonBoxPadding,
-          child: SizedBox(
-            height: submitButtonHeight,
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                textStyle: Theme.of(context).textTheme.subtitle1,
-              ),
-              onPressed: _nameController.text.isEmpty ? null : _onAddAlarmPage,
-              // onPressed: () {},
-              child: const Text(
-                '다음',
-              ),
-            ),
-          ),
-        ),
+      bottomNavigationBar: BottomSubmitButton(
+        text: '다음',
+        onPressed: _nameController.text.isEmpty ? null : _onAddAlarmPage,
       ),
     );
   }
@@ -106,7 +84,9 @@ class _AddMedicinePageState extends State<AddMedicinePage> {
       context,
       FadePageRoute(
         page: AddAlarmPage(
-            medicineImage: _medicineImage, medicineName: _nameController.text),
+          medicineImage: _medicineImage,
+          medicineName: _nameController.text,
+        ),
       ),
     );
   }
