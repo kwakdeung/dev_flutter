@@ -1,5 +1,5 @@
 import 'package:dory/components/dory_colors.dart';
-import 'package:dory/pages/add/add_medicine_page.dart';
+import 'package:dory/pages/add_medicine/add_medicine_page.dart';
 import 'package:dory/pages/history/history_page.dart';
 import 'package:dory/pages/today/today_page.dart';
 import 'package:flutter/cupertino.dart';
