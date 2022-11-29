@@ -64,6 +64,9 @@ class _AddMedicinePageState extends State<AddMedicinePage> {
                     hintStyle: Theme.of(context).textTheme.bodyText2,
                     contentPadding: textFieldContentPadding,
                   ),
+                  onChanged: (_) {
+                    setState(() {});
+                  },
                 ),
               ],
             ),
@@ -79,8 +82,9 @@ class _AddMedicinePageState extends State<AddMedicinePage> {
               style: ElevatedButton.styleFrom(
                 textStyle: Theme.of(context).textTheme.subtitle1,
               ),
-              onPressed: () {},
-              child: Text(
+              onPressed: _nameController.text.isEmpty ? null : () {},
+              // onPressed: () {},
+              child: const Text(
                 '다음',
               ),
             ),
