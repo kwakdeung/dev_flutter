@@ -1,3 +1,4 @@
+import 'package:dory/components/dory_themes.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -12,10 +13,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
-      theme: ThemeData(
-        fontFamily: 'GmarketSansTTF',
-        primarySwatch: Colors.blue,
-      ),
+      theme: DoryThemes.lightTheme,
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
       builder: (context, child) => MediaQuery(
         data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
@@ -58,7 +56,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             Text(
               '$_counter',
-              style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 40),
+              style: Theme.of(context).textTheme.headline4,
             ),
           ],
         ),
