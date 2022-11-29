@@ -1,3 +1,5 @@
+// ch02_06_control
+
 void main() {}
 
 void basic1if() {
@@ -34,7 +36,7 @@ void basic2ElseIf() {
   } else if (number % 2 == 0) {
     print('2의 배수입니다.');
   } else {
-    print('5, 4, 3의 배수가 아닙니다.');
+    print('5, 4, 3, 2의 배수가 아닙니다.');
   }
 }
 
