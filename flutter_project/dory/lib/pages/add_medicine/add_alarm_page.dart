@@ -5,14 +5,17 @@ import 'package:dory/components/dory_constants.dart';
 import 'package:dory/components/dory_widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
+import '../../services/add_medicine_service.dart';
 import 'components/add_page_widget.dart';
 
 class AddAlarmPage extends StatelessWidget {
   final File? medicineImage;
   final String medicineName;
+  final service = AddMedicineService();
 
-  const AddAlarmPage({
+  AddAlarmPage({
     super.key,
     required this.medicineImage,
     required this.medicineName,
@@ -32,14 +35,13 @@ class AddAlarmPage extends StatelessWidget {
             ),
           ),
           Expanded(
-            child: ListView(
-              children: const [
-                AlarmBox(),
-                AlarmBox(),
-                AlarmBox(),
-                AlarmBox(),
-                AddAlarmButton(),
-              ],
+            child: AnimatedBuilder(
+              animation: service,
+              builder: (context, _) {
+                return ListView(
+                  children: alarmWidgets,
+                );
+              },
             ),
           ),
         ],
@@ -50,11 +52,32 @@ class AddAlarmPage extends StatelessWidget {
       ),
     );
   }
+
+  List<Widget> get alarmWidgets {
+    final children = <Widget>[];
+    children.addAll(
+      service.alarms.map(
+        (alarmTime) => AlarmBox(
+          time: alarmTime,
+          service: service,
+        ),
+      ),
+    );
+    children.add(AddAlarmButton(
+      service: service,
+    ));
+    return children;
+  }
 }
 
 class AlarmBox extends StatelessWidget {
+  final String time;
+  final AddMedicineService service;
+
   const AlarmBox({
     Key? key,
+    required this.time,
+    required this.service,
   }) : super(key: key);
 
   @override
@@ -64,7 +87,9 @@ class AlarmBox extends StatelessWidget {
         Expanded(
           flex: 1,
           child: IconButton(
-            onPressed: () {},
+            onPressed: () {
+              service.removeAlarm(time);
+            },
             icon: const Icon(CupertinoIcons.minus_circle),
           ),
         ),
@@ -78,54 +103,14 @@ class AlarmBox extends StatelessWidget {
               showModalBottomSheet(
                 context: context,
                 builder: (context) {
-                  return BottomSheetBody(children: [
-                    SizedBox(
-                      height: 200,
-                      child: CupertinoDatePicker(
-                        onDateTimeChanged: (dateTime) {},
-                        mode: CupertinoDatePickerMode.time,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: regularSpace,
-                    ),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: SizedBox(
-                            height: submitButtonHeight,
-                            child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                  textStyle:
-                                      Theme.of(context).textTheme.subtitle1,
-                                  backgroundColor: Colors.white,
-                                  foregroundColor: DoryColors.primaryColor),
-                              onPressed: () {},
-                              child: Text('취소'),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(width: smallSpace),
-                        Expanded(
-                          child: SizedBox(
-                            height: submitButtonHeight,
-                            child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                textStyle:
-                                    Theme.of(context).textTheme.subtitle1,
-                              ),
-                              onPressed: () {},
-                              child: Text('선택'),
-                            ),
-                          ),
-                        ),
-                      ],
-                    )
-                  ]);
+                  return TimePickerBottomSheet(
+                    initialTime: time,
+                    service: service,
+                  );
                 },
               );
             },
-            child: const Text('20:00'),
+            child: Text(time),
           ),
         )
       ],
@@ -133,9 +118,81 @@ class AlarmBox extends StatelessWidget {
   }
 }
 
+// ignore: must_be_immutable
+class TimePickerBottomSheet extends StatelessWidget {
+  final String initialTime;
+  final AddMedicineService service;
+  DateTime? _setDateTime;
+
+  TimePickerBottomSheet({
+    Key? key,
+    required this.initialTime,
+    required this.service,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final initialDateTime = DateFormat('HH:mm').parse(initialTime);
+    return BottomSheetBody(children: [
+      SizedBox(
+        height: 200,
+        child: CupertinoDatePicker(
+          onDateTimeChanged: (dateTime) {
+            _setDateTime = dateTime;
+          },
+          mode: CupertinoDatePickerMode.time,
+          initialDateTime: initialDateTime,
+        ),
+      ),
+      const SizedBox(
+        height: regularSpace,
+      ),
+      Row(
+        children: [
+          Expanded(
+            child: SizedBox(
+              height: submitButtonHeight,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    textStyle: Theme.of(context).textTheme.subtitle1,
+                    backgroundColor: Colors.white,
+                    foregroundColor: DoryColors.primaryColor),
+                onPressed: () => Navigator.pop(context),
+                child: const Text('취소'),
+              ),
+            ),
+          ),
+          const SizedBox(width: smallSpace),
+          Expanded(
+            child: SizedBox(
+              height: submitButtonHeight,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  textStyle: Theme.of(context).textTheme.subtitle1,
+                ),
+                onPressed: () {
+                  service.setAlarm(
+                    prevTime: initialTime,
+                    setTime: _setDateTime ?? initialDateTime,
+                  );
+                  Navigator.pop(context);
+                },
+                child: const Text('선택'),
+              ),
+            ),
+          ),
+        ],
+      )
+    ]);
+  }
+}
+
 class AddAlarmButton extends StatelessWidget {
+  final AddMedicineService service;
+
   const AddAlarmButton({
     Key? key,
+    required this.service,
   }) : super(key: key);
 
   @override
@@ -145,7 +202,7 @@ class AddAlarmButton extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 6),
         textStyle: Theme.of(context).textTheme.subtitle1,
       ),
-      onPressed: () {},
+      onPressed: service.addNowAlarm,
       child: Row(
         children: const [
           Expanded(
