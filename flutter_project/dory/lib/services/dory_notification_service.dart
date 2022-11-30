@@ -37,6 +37,7 @@ class DoryNotificationService {
   }
 
   Future<bool> addNotification({
+    required int medicineId,
     required String alarmTimeStr,
     required String title, // HH:mm 약 먹을 시간이예요!
     required String body, // {약이름} 복약했다고 알려주세요!
@@ -55,7 +56,8 @@ class DoryNotificationService {
         : now.day;
 
     /// id
-    final alarmTimeId = alarmTimeStr.replaceAll(':', '');
+    String alarmTimeId = alarmTimeStr.replaceAll(':', '');
+    alarmTimeId = medicineId.toString() + alarmTimeId; // 1 + 08:00 = 10800
 
     /// add schedule notification
     final details = _notificationDetails(
@@ -65,7 +67,7 @@ class DoryNotificationService {
     );
 
     await notification.zonedSchedule(
-      int.parse(alarmTimeId), // unique
+      int.parse(alarmTimeId), // unique 1008:00 -> 100800
       title,
       body,
       tz.TZDateTime(
