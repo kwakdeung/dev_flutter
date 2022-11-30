@@ -1,9 +1,17 @@
 import 'package:dory/components/dory_themes.dart';
+import 'package:dory/services/dory_notification_service.dart';
 import 'package:flutter/material.dart';
 
 import 'pages/home_page.dart';
 
+final notification = DoryNotificationService();
+
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  notification.initializeTimeZone();
+  notification.initializeNotification();
+
   runApp(const MyApp());
 }
 
@@ -16,7 +24,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: DoryThemes.lightTheme,
-      home: HomePage(),
+      home: const HomePage(),
       builder: (context, child) => MediaQuery(
         data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
         child: child!,
