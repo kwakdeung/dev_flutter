@@ -4,6 +4,7 @@ import 'package:dory/components/dory_colors.dart';
 import 'package:dory/components/dory_constants.dart';
 import 'package:dory/components/dory_widgets.dart';
 import 'package:dory/main.dart';
+import 'package:dory/services/dory_file_service.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -65,6 +66,10 @@ class AddAlarmPage extends StatelessWidget {
           }
 
           // 2. save image (local dir)
+          String? imageFilePath;
+          if (medicineImage != null) {
+            imageFilePath = await saveImageToLocalDirectory(medicineImage!);
+          }
           // 3. add medicine model (local DB, hive)
         },
         text: "완료",
