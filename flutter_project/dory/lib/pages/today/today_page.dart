@@ -1,11 +1,16 @@
+import 'dart:io';
+
 import 'package:dory/components/dory_constants.dart';
+import 'package:dory/main.dart';
+import 'package:dory/models/medicine_alarm.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+
+import '../../models/medicine.dart';
 
 class TodayPage extends StatelessWidget {
   TodayPage({super.key});
-
-  final list = ['약', '약 이름', '약 이름 테스트', '약이름한둘약이름한둘약이름한둘약이름한둘'];
 
   @override
   Widget build(BuildContext context) {
@@ -19,32 +24,54 @@ class TodayPage extends StatelessWidget {
         const SizedBox(height: regularSpace),
         const Divider(height: 1, thickness: 2.0),
         Expanded(
-            child: ListView.separated(
-          padding: const EdgeInsets.symmetric(vertical: smallSpace),
-          itemCount: list.length,
-          itemBuilder: ((context, index) {
-            return MedicineListTile(
-              name: list[index],
-            );
-          }),
-          separatorBuilder: (BuildContext context, int index) {
-            return const Divider(
-              height: regularSpace,
-            );
-          },
+            child: ValueListenableBuilder(
+          valueListenable: medicineRepository.medicineBox.listenable(),
+          builder: _builderMedicineListView,
         )),
         const Divider(height: 1, thickness: 2.0),
       ],
     );
   }
+
+  Widget _builderMedicineListView(context, Box<Medicine> box, _) {
+    final medicines = box.values.toList();
+    final medicineAlarms = <MedicineAlarm>[];
+
+    for (var medicine in medicines) {
+      for (var alarm in medicine.alarms) {
+        medicineAlarms.add(MedicineAlarm(
+          medicine.id,
+          medicine.name,
+          medicine.imagePath,
+          alarm,
+          medicine.key,
+        ));
+      }
+    }
+
+    return ListView.separated(
+      padding: const EdgeInsets.symmetric(vertical: smallSpace),
+      itemCount: medicineAlarms.length,
+      itemBuilder: ((context, index) {
+        return MedicineListTile(
+          medicineAlarm: medicineAlarms[index],
+        );
+      }),
+      separatorBuilder: (BuildContext context, int index) {
+        return const Divider(
+          height: regularSpace,
+        );
+      },
+    );
+  }
 }
 
 class MedicineListTile extends StatelessWidget {
-  final String name;
+  final MedicineAlarm medicineAlarm;
 
   const MedicineListTile({
     Key? key,
-    required this.name,
+    required this.medicineAlarm,
   }) : super(key: key);
 
   @override
@@ -55,8 +82,11 @@ class MedicineListTile extends StatelessWidget {
         CupertinoButton(
           padding: EdgeInsets.zero,
           onPressed: () {},
-          child: const CircleAvatar(
+          child: CircleAvatar(
             radius: 40,
+            foregroundImage: medicineAlarm.imagePath == null
+                ? null
+                : FileImage(File(medicineAlarm.imagePath!)),
           ),
         ),
         const SizedBox(
@@ -66,13 +96,13 @@ class MedicineListTile extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('🕑 08:30', style: textStyle),
+              Text('🕑 ${medicineAlarm.alarmTime}', style: textStyle),
               const SizedBox(height: 6),
               Wrap(
                 crossAxisAlignment: WrapCrossAlignment.center,
                 children: [
                   Text(
-                    '$name,',
+                    '${medicineAlarm.name},',
                     style: textStyle,
                   ),
                   TileActionButton(
@@ -97,8 +127,10 @@ class MedicineListTile extends StatelessWidget {
           ),
         ),
         CupertinoButton(
-          onPressed: () {},
-          child: Icon(CupertinoIcons.ellipsis_vertical),
+          onPressed: () {
+            medicineRepository.deleteMedicine(medicineAlarm.key);
+          },
+          child: const Icon(CupertinoIcons.ellipsis_vertical),
         ),
       ],
     );
