@@ -5,10 +5,12 @@ import 'package:dory/services/dory_notification_service.dart';
 import 'package:flutter/material.dart';
 
 import 'pages/home_page.dart';
+import 'repositories/medicine_history_repository.dart';
 
 final notification = DoryNotificationService();
 final hive = DoryHive();
 final medicineRepository = MedicineRepository();
+final historyRepository = MedicineHistoryRepository();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
