@@ -7,6 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
+import '../../components/dory_page_route.dart';
 import '../../models/medicine.dart';
 
 class TodayPage extends StatelessWidget {
@@ -81,7 +82,14 @@ class MedicineListTile extends StatelessWidget {
       children: [
         CupertinoButton(
           padding: EdgeInsets.zero,
-          onPressed: () {},
+          onPressed: medicineAlarm.imagePath == null
+              ? null
+              : () {
+                  Navigator.push(
+                      context,
+                      FadePageRoute(
+                          page: ImageDetailPage(medicineAlarm: medicineAlarm)));
+                },
           child: CircleAvatar(
             radius: 40,
             foregroundImage: medicineAlarm.imagePath == null
@@ -133,6 +141,27 @@ class MedicineListTile extends StatelessWidget {
           child: const Icon(CupertinoIcons.ellipsis_vertical),
         ),
       ],
+    );
+  }
+}
+
+class ImageDetailPage extends StatelessWidget {
+  const ImageDetailPage({
+    Key? key,
+    required this.medicineAlarm,
+  }) : super(key: key);
+
+  final MedicineAlarm medicineAlarm;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        leading: const CloseButton(),
+      ),
+      body: Center(
+        child: Image.file(File(medicineAlarm.imagePath!)),
+      ),
     );
   }
 }
