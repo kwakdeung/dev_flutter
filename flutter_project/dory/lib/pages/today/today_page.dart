@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dory/components/dory_constants.dart';
 import 'package:dory/main.dart';
 import 'package:dory/models/medicine_alarm.dart';
+import 'package:dory/pages/bottomsheet/time_setting_bottomsheet.dart';
 import 'package:dory/pages/today/today_empty_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -134,7 +135,16 @@ class MedicineListTile extends StatelessWidget {
                     style: textStyle,
                   ),
                   TileActionButton(
-                    onTap: () {},
+                    onTap: () {
+                      showModalBottomSheet(
+                        context: context,
+                        builder: (context) => TimeSettingBottomSheet(
+                          initialTime: medicineAlarm.alarmTime,
+                        ),
+                      ).then((value) {
+                        print(value);
+                      });
+                    },
                     title: '아까',
                   ),
                   Text(
