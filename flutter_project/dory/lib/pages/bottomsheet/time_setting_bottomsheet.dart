@@ -37,9 +37,9 @@ class TimeSettingBottomSheet extends StatelessWidget {
           initialDateTime: initialDateTime,
         ),
       ),
-      const SizedBox(
-        height: regularSpace,
-      ),
+      const SizedBox(height: smallSpace),
+      if (bottomWidget != null) bottomWidget!,
+      if (bottomWidget != null) const SizedBox(height: smallSpace),
       Row(
         children: [
           Expanded(
@@ -64,7 +64,7 @@ class TimeSettingBottomSheet extends StatelessWidget {
                   textStyle: Theme.of(context).textTheme.subtitle1,
                 ),
                 onPressed: () => Navigator.pop(context, setDateTime),
-                child: const Text('선택'),
+                child: Text(submitTitle),
               ),
             ),
           ),
