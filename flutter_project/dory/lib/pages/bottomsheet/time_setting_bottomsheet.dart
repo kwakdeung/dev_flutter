@@ -9,9 +9,14 @@ import '../../components/dory_widgets.dart';
 class TimeSettingBottomSheet extends StatelessWidget {
   final String initialTime;
 
+  final Widget? bottomWidget;
+  final String submitTitle;
+
   const TimeSettingBottomSheet({
     Key? key,
     required this.initialTime,
+    this.bottomWidget,
+    required this.submitTitle,
   }) : super(key: key);
 
   @override

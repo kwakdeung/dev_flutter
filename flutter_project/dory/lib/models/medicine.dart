@@ -1,15 +1,16 @@
-import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 part 'medicine.g.dart';
 
 @HiveType(typeId: 1)
 class Medicine extends HiveObject {
   // id, name, image(optional), alarms
-  Medicine(
-      {required this.id,
-      required this.name,
-      required this.imagePath,
-      required this.alarms});
+  Medicine({
+    required this.id,
+    required this.name,
+    required this.imagePath,
+    required this.alarms,
+  });
 
   @HiveField(0)
   final int

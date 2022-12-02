@@ -141,17 +141,9 @@ class MedicineListTile extends StatelessWidget {
                         context: context,
                         builder: (context) => TimeSettingBottomSheet(
                           initialTime: medicineAlarm.alarmTime,
+                          submitTitle: '',
                         ),
-                      ).then((takeDateTime) {
-                        if (takeDateTime == null || takeDateTime is! DateTime) {
-                          return;
-                        }
-                        historyRepository.addHistory(MedicineHistory(
-                          medicineId: medicineAlarm.id,
-                          alarmTime: medicineAlarm.alarmTime,
-                          takeTime: takeDateTime,
-                        ));
-                      });
+                      );
                     },
                     title: '아까',
                   ),

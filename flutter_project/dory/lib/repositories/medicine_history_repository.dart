@@ -4,6 +4,11 @@ import 'package:dory/models/medicine_history.dart';
 import 'package:dory/repositories/dory_hive.dart';
 import 'package:hive/hive.dart';
 
+import 'package:dory/repositories/dory_hive.dart';
+import 'package:hive/hive.dart';
+
+import 'package:dory/models/medicine_history.dart';
+
 class MedicineHistoryRepository {
   Box<MedicineHistory>? _historyBox;
 
