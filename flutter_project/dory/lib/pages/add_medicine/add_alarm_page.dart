@@ -141,6 +141,7 @@ class AlarmBox extends StatelessWidget {
                 builder: (context) {
                   return TimeSettingBottomSheet(
                     initialTime: time,
+                    submitTitle: '',
                   );
                 },
               ).then((value) {

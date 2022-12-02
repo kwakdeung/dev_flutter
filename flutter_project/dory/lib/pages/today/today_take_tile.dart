@@ -73,6 +73,7 @@ class BeforeTakeTile extends StatelessWidget {
       context: context,
       builder: (context) => TimeSettingBottomSheet(
         initialTime: medicineAlarm.alarmTime,
+        submitTitle: '',
       ),
     ).then((takeDateTime) {
       if (takeDateTime == null || takeDateTime is! DateTime) {
