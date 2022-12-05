@@ -4,7 +4,6 @@ part 'medicine.g.dart';
 
 @HiveType(typeId: 1)
 class Medicine extends HiveObject {
-  // id, name, image(optional), alarms
   Medicine({
     required this.id,
     required this.name,
@@ -13,8 +12,7 @@ class Medicine extends HiveObject {
   });
 
   @HiveField(0)
-  final int
-      id; // unique ai(int) O, UUID(String), millisecondsSinceEpoch(int), random(int)
+  final int id;
 
   @HiveField(1)
   final String name;

@@ -1,17 +1,17 @@
 import 'dart:io';
 
+import 'package:dory/components/dory_constants.dart';
+import 'package:dory/components/dory_page_route.dart';
+import 'package:dory/components/dory_widgets.dart';
 import 'package:dory/pages/add_medicine/add_alarm_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../../components/dory_constants.dart';
-import '../../components/dory_page_route.dart';
-import '../../components/dory_widgets.dart';
 import 'components/add_page_widget.dart';
 
 class AddMedicinePage extends StatefulWidget {
-  const AddMedicinePage({super.key});
+  const AddMedicinePage({Key? key}) : super(key: key);
 
   @override
   State<AddMedicinePage> createState() => _AddMedicinePageState();
@@ -37,20 +37,18 @@ class _AddMedicinePageState extends State<AddMedicinePage> {
         child: AddPageBody(
           children: [
             Text(
-              '어떤 약이에요?',
+              '어떤 약이예요?',
               style: Theme.of(context).textTheme.headline4,
             ),
-            Container(
-              margin: const EdgeInsets.only(
-                  top: largeSpace, bottom: largeSpace + regularSpace),
-              child: Center(
-                child: MedicineImageButton(
-                  changeImageFile: (File? value) {
-                    _medicineImage = value;
-                  },
-                ),
+            const SizedBox(height: largeSpace),
+            Center(
+              child: _MedicineImageButton(
+                changeImageFile: (File? value) {
+                  _medicineImage = value;
+                },
               ),
             ),
+            const SizedBox(height: largeSpace + regularSpace),
             Text(
               '약 이름',
               style: Theme.of(context).textTheme.subtitle1,
@@ -74,8 +72,8 @@ class _AddMedicinePageState extends State<AddMedicinePage> {
         ),
       ),
       bottomNavigationBar: BottomSubmitButton(
-        text: '다음',
         onPressed: _nameController.text.isEmpty ? null : _onAddAlarmPage,
+        text: '다음',
       ),
     );
   }
@@ -93,19 +91,17 @@ class _AddMedicinePageState extends State<AddMedicinePage> {
   }
 }
 
-class MedicineImageButton extends StatefulWidget {
+class _MedicineImageButton extends StatefulWidget {
   final ValueChanged<File?> changeImageFile;
 
-  const MedicineImageButton({
-    super.key,
-    required this.changeImageFile,
-  });
+  const _MedicineImageButton({Key? key, required this.changeImageFile})
+      : super(key: key);
 
   @override
-  State<MedicineImageButton> createState() => _MedicineImageButtonState();
+  State<_MedicineImageButton> createState() => _MedicineImageButtonState();
 }
 
-class _MedicineImageButtonState extends State<MedicineImageButton> {
+class _MedicineImageButtonState extends State<_MedicineImageButton> {
   File? _pickedImage;
 
   @override
@@ -113,8 +109,8 @@ class _MedicineImageButtonState extends State<MedicineImageButton> {
     return CircleAvatar(
       radius: 40,
       child: CupertinoButton(
-        padding: _pickedImage == null ? null : EdgeInsets.zero,
         onPressed: _showBottomSheet,
+        padding: _pickedImage == null ? null : EdgeInsets.zero,
         child: _pickedImage == null
             ? const Icon(
                 CupertinoIcons.photo_camera_solid,
@@ -131,13 +127,14 @@ class _MedicineImageButtonState extends State<MedicineImageButton> {
 
   void _showBottomSheet() {
     showModalBottomSheet(
-        context: context,
-        builder: (context) {
-          return PickImageBottomSheet(
-            onPressedCamera: () => _onPressed(ImageSource.camera),
-            onPressedGallery: () => _onPressed(ImageSource.gallery),
-          );
-        });
+      context: context,
+      builder: (context) {
+        return PickImageBottomSheet(
+          onPressedCamera: () => _onPressed(ImageSource.camera),
+          onPressedGallery: () => _onPressed(ImageSource.gallery),
+        );
+      },
+    );
   }
 
   void _onPressed(ImageSource source) {
@@ -158,14 +155,12 @@ class _MedicineImageButtonState extends State<MedicineImageButton> {
 }
 
 class PickImageBottomSheet extends StatelessWidget {
-  final VoidCallback? onPressedCamera;
-  final VoidCallback? onPressedGallery;
+  final VoidCallback onPressedCamera;
+  final VoidCallback onPressedGallery;
 
-  const PickImageBottomSheet({
-    super.key,
-    required this.onPressedCamera,
-    required this.onPressedGallery,
-  });
+  const PickImageBottomSheet(
+      {Key? key, required this.onPressedCamera, required this.onPressedGallery})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {

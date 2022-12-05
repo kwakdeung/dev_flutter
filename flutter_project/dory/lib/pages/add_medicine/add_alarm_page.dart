@@ -1,30 +1,28 @@
 import 'dart:io';
 
-import 'package:dory/components/dory_colors.dart';
-import 'package:dory/components/dory_constants.dart';
-import 'package:dory/components/dory_widgets.dart';
-import 'package:dory/main.dart';
-import 'package:dory/models/medicine.dart';
-import 'package:dory/services/dory_file_service.dart';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
+import '../../components/dory_constants.dart';
+import '../../components/dory_widgets.dart';
+import '../../main.dart';
+import '../../models/medicine.dart';
 import '../../services/add_medicine_service.dart';
+import '../../services/dory_file_service.dart';
 import '../bottomsheet/time_setting_bottomsheet.dart';
 import 'components/add_page_widget.dart';
 
 class AddAlarmPage extends StatelessWidget {
   final File? medicineImage;
   final String medicineName;
+
   final service = AddMedicineService();
 
   AddAlarmPage({
-    super.key,
+    Key? key,
     required this.medicineImage,
     required this.medicineName,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -32,13 +30,11 @@ class AddAlarmPage extends StatelessWidget {
       appBar: AppBar(),
       body: AddPageBody(
         children: [
-          Container(
-            margin: const EdgeInsets.only(bottom: largeSpace),
-            child: Text(
-              '매일 복약 잊지 말아요!',
-              style: Theme.of(context).textTheme.headline4,
-            ),
+          Text(
+            '매일 복약 잊지 말아요!',
+            style: Theme.of(context).textTheme.headline4,
           ),
+          const SizedBox(height: largeSpace),
           Expanded(
             child: AnimatedBuilder(
               animation: service,
@@ -54,12 +50,13 @@ class AddAlarmPage extends StatelessWidget {
       bottomNavigationBar: BottomSubmitButton(
         onPressed: () async {
           bool result = false;
+
           // 1. add alarm
           for (var alarm in service.alarms) {
-            result = await notification.addNotification(
+            result = await notification.addNotifcication(
               medicineId: medicineRepository.newId,
               alarmTimeStr: alarm,
-              title: '$alarm 약 먹을 시간이에요!',
+              title: '$alarm 약 먹을 시간이예요!',
               body: '$medicineName 복약했다고 알려주세요!',
             );
           }
@@ -73,6 +70,7 @@ class AddAlarmPage extends StatelessWidget {
           if (medicineImage != null) {
             imageFilePath = await saveImageToLocalDirectory(medicineImage!);
           }
+
           // 3. add medicine model (local DB, hive)
           final medicine = Medicine(
             id: medicineRepository.newId,
@@ -84,7 +82,7 @@ class AddAlarmPage extends StatelessWidget {
 
           Navigator.popUntil(context, (route) => route.isFirst);
         },
-        text: "완료",
+        text: '완료',
       ),
     );
   }
@@ -141,11 +139,11 @@ class AlarmBox extends StatelessWidget {
                 builder: (context) {
                   return TimeSettingBottomSheet(
                     initialTime: time,
-                    submitTitle: '',
                   );
                 },
               ).then((value) {
                 if (value == null || value is! DateTime) return;
+
                 service.setAlarm(
                   prevTime: time,
                   setTime: value,

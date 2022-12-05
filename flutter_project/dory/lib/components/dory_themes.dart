@@ -8,11 +8,11 @@ class DoryThemes {
         scaffoldBackgroundColor: Colors.white,
         splashColor: Colors.white,
         textTheme: _textTheme,
-        appBarTheme: _appbarTheme,
+        appBarTheme: _appBarTheme,
         brightness: Brightness.light,
       );
 
-  static ThemeData get darkTheme => ThemeData(
+  static ThemeData get dartTheme => ThemeData(
         primarySwatch: DoryColors.primaryMeterialColor,
         fontFamily: 'GmarketSansTTF',
         splashColor: Colors.white,
@@ -20,7 +20,7 @@ class DoryThemes {
         brightness: Brightness.dark,
       );
 
-  static const AppBarTheme _appbarTheme = AppBarTheme(
+  static const AppBarTheme _appBarTheme = AppBarTheme(
     backgroundColor: Colors.white,
     iconTheme: IconThemeData(
       color: DoryColors.primaryColor,

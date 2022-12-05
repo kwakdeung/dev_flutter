@@ -2,7 +2,6 @@ import 'package:hive_flutter/hive_flutter.dart';
 
 import '../models/medicine.dart';
 import '../models/medicine_history.dart';
-// import '../models/medicine_history.dart';
 
 class DoryHive {
   Future<void> initializeHive() async {

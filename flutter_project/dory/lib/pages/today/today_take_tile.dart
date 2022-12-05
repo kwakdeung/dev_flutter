@@ -13,12 +13,12 @@ import '../../main.dart';
 import 'image_detail_page.dart';
 
 class BeforeTakeTile extends StatelessWidget {
+  final MedicineAlarm medicineAlarm;
+
   const BeforeTakeTile({
     Key? key,
     required this.medicineAlarm,
   }) : super(key: key);
-
-  final MedicineAlarm medicineAlarm;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +26,9 @@ class BeforeTakeTile extends StatelessWidget {
 
     return Row(
       children: [
-        _MedicineImageButton(medicineAlarm: medicineAlarm),
+        MedicineImageButton(
+          imagePath: medicineAlarm.imagePath,
+        ),
         const SizedBox(width: smallSpace),
         Expanded(
           child: Column(
@@ -49,11 +51,16 @@ class BeforeTakeTile extends StatelessWidget {
           Text('${medicineAlarm.name},', style: textStyle),
           TileActionButton(
             onTap: () {
-              historyRepository.addHistory(MedicineHistory(
-                medicineId: medicineAlarm.id,
-                alarmTime: medicineAlarm.alarmTime,
-                takeTime: DateTime.now(),
-              ));
+              historyRepository.addHistory(
+                MedicineHistory(
+                  medicineId: medicineAlarm.id,
+                  medicineKey: medicineAlarm.key,
+                  alarmTime: medicineAlarm.alarmTime,
+                  takeTime: DateTime.now(),
+                  imagePath: medicineAlarm.imagePath,
+                  name: medicineAlarm.name,
+                ),
+              );
             },
             title: '지금',
           ),
@@ -73,31 +80,35 @@ class BeforeTakeTile extends StatelessWidget {
       context: context,
       builder: (context) => TimeSettingBottomSheet(
         initialTime: medicineAlarm.alarmTime,
-        submitTitle: '',
       ),
     ).then((takeDateTime) {
       if (takeDateTime == null || takeDateTime is! DateTime) {
         return;
       }
 
-      historyRepository.addHistory(MedicineHistory(
-        medicineId: medicineAlarm.id,
-        alarmTime: medicineAlarm.alarmTime,
-        takeTime: takeDateTime,
-      ));
+      historyRepository.addHistory(
+        MedicineHistory(
+          medicineId: medicineAlarm.id,
+          alarmTime: medicineAlarm.alarmTime,
+          takeTime: takeDateTime,
+          medicineKey: medicineAlarm.key,
+          imagePath: medicineAlarm.imagePath,
+          name: medicineAlarm.name,
+        ),
+      );
     });
   }
 }
 
 class AfterTakeTile extends StatelessWidget {
+  final MedicineAlarm medicineAlarm;
+  final MedicineHistory history;
+
   const AfterTakeTile({
     Key? key,
     required this.medicineAlarm,
     required this.history,
   }) : super(key: key);
-
-  final MedicineAlarm medicineAlarm;
-  final MedicineHistory history;
 
   @override
   Widget build(BuildContext context) {
@@ -107,7 +118,9 @@ class AfterTakeTile extends StatelessWidget {
       children: [
         Stack(
           children: [
-            _MedicineImageButton(medicineAlarm: medicineAlarm),
+            MedicineImageButton(
+              imagePath: medicineAlarm.imagePath,
+            ),
             CircleAvatar(
               radius: 40,
               backgroundColor: Colors.green.withOpacity(0.7),
@@ -189,6 +202,9 @@ class AfterTakeTile extends StatelessWidget {
           medicineId: medicineAlarm.id,
           alarmTime: medicineAlarm.alarmTime,
           takeTime: takeDateTime,
+          medicineKey: medicineAlarm.key,
+          imagePath: medicineAlarm.imagePath,
+          name: medicineAlarm.name,
         ),
       );
     });
@@ -196,12 +212,12 @@ class AfterTakeTile extends StatelessWidget {
 }
 
 class _MoreButton extends StatelessWidget {
+  final MedicineAlarm medicineAlarm;
+
   const _MoreButton({
     Key? key,
     required this.medicineAlarm,
   }) : super(key: key);
-
-  final MedicineAlarm medicineAlarm;
 
   @override
   Widget build(BuildContext context) {
@@ -214,47 +230,45 @@ class _MoreButton extends StatelessWidget {
   }
 }
 
-class _MedicineImageButton extends StatelessWidget {
-  const _MedicineImageButton({
-    Key? key,
-    required this.medicineAlarm,
-  }) : super(key: key);
+class MedicineImageButton extends StatelessWidget {
+  final String? imagePath;
 
-  final MedicineAlarm medicineAlarm;
+  const MedicineImageButton({
+    Key? key,
+    required this.imagePath,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return CupertinoButton(
       padding: EdgeInsets.zero,
-      onPressed: medicineAlarm.imagePath == null
+      onPressed: imagePath == null
           ? null
           : () {
               Navigator.push(
                 context,
                 FadePageRoute(
-                  page: ImageDetailPage(medicineAlarm: medicineAlarm),
+                  page: ImageDetailPage(imagePath: imagePath!),
                 ),
               );
             },
       child: CircleAvatar(
         radius: 40,
-        foregroundImage: medicineAlarm.imagePath == null
-            ? null
-            : FileImage(File(medicineAlarm.imagePath!)),
+        foregroundImage: imagePath == null ? null : FileImage(File(imagePath!)),
       ),
     );
   }
 }
 
 class TileActionButton extends StatelessWidget {
+  final VoidCallback onTap;
+  final String title;
+
   const TileActionButton({
     Key? key,
     required this.onTap,
     required this.title,
   }) : super(key: key);
-
-  final VoidCallback onTap;
-  final String title;
 
   @override
   Widget build(BuildContext context) {

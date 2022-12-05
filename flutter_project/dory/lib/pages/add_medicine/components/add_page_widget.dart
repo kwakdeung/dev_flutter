@@ -5,10 +5,7 @@ import '../../../components/dory_constants.dart';
 class AddPageBody extends StatelessWidget {
   final List<Widget> children;
 
-  const AddPageBody({
-    super.key,
-    required this.children,
-  });
+  const AddPageBody({Key? key, required this.children}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -32,10 +29,10 @@ class BottomSubmitButton extends StatelessWidget {
   final String text;
 
   const BottomSubmitButton({
-    super.key,
+    Key? key,
     required this.onPressed,
     required this.text,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -45,11 +42,10 @@ class BottomSubmitButton extends StatelessWidget {
         child: SizedBox(
           height: submitButtonHeight,
           child: ElevatedButton(
+            onPressed: onPressed,
             style: ElevatedButton.styleFrom(
               textStyle: Theme.of(context).textTheme.subtitle1,
             ),
-            // onPressed: _nameController.text.isEmpty ? null : _onAddAlarmPage,
-            onPressed: onPressed,
             child: Text(text),
           ),
         ),

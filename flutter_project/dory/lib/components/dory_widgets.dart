@@ -5,10 +5,8 @@ import 'dory_constants.dart';
 
 class BottomSheetBody extends StatelessWidget {
   final List<Widget> children;
-  const BottomSheetBody({
-    super.key,
-    required this.children,
-  });
+
+  const BottomSheetBody({Key? key, required this.children}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -30,16 +28,15 @@ void showPermissionDenied(
 }) {
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
-      content: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text('$permission 권한이 없습니다.'),
-          const TextButton(
-            onPressed: openAppSettings,
-            child: Text('설정창으로 이동'),
-          )
-        ],
-      ),
-    ),
+        content: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text('$permission 권한이 없습니다.'),
+        const TextButton(
+          onPressed: openAppSettings,
+          child: Text('설정창으로 이동'),
+        )
+      ],
+    )),
   );
 }

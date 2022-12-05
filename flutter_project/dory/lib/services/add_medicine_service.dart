@@ -28,6 +28,7 @@ class AddMedicineService with ChangeNotifier {
 
     final setTimeStr = DateFormat('HH:mm').format(setTime);
     _alarms.add(setTimeStr);
+
     notifyListeners();
   }
 }

@@ -8,15 +8,14 @@ import '../../components/dory_widgets.dart';
 
 class TimeSettingBottomSheet extends StatelessWidget {
   final String initialTime;
-
   final Widget? bottomWidget;
   final String submitTitle;
 
   const TimeSettingBottomSheet({
     Key? key,
     required this.initialTime,
+    this.submitTitle = '선택',
     this.bottomWidget,
-    required this.submitTitle,
   }) : super(key: key);
 
   @override
@@ -26,50 +25,54 @@ class TimeSettingBottomSheet extends StatelessWidget {
     final initialDateTime = DateTime(now.year, now.month, now.day,
         initialTimeData.hour, initialTimeData.minute);
     DateTime setDateTime = initialDateTime;
-    return BottomSheetBody(children: [
-      SizedBox(
-        height: 200,
-        child: CupertinoDatePicker(
-          onDateTimeChanged: (dateTime) {
-            setDateTime = dateTime;
-          },
-          mode: CupertinoDatePickerMode.time,
-          initialDateTime: initialDateTime,
+
+    return BottomSheetBody(
+      children: [
+        SizedBox(
+          height: 200,
+          child: CupertinoDatePicker(
+            onDateTimeChanged: (dateTime) {
+              setDateTime = dateTime;
+            },
+            mode: CupertinoDatePickerMode.time,
+            initialDateTime: initialDateTime,
+          ),
         ),
-      ),
-      const SizedBox(height: smallSpace),
-      if (bottomWidget != null) bottomWidget!,
-      if (bottomWidget != null) const SizedBox(height: smallSpace),
-      Row(
-        children: [
-          Expanded(
-            child: SizedBox(
-              height: submitButtonHeight,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
+        const SizedBox(height: smallSpace),
+        if (bottomWidget != null) bottomWidget!,
+        const SizedBox(height: smallSpace),
+        Row(
+          children: [
+            Expanded(
+              child: SizedBox(
+                height: submitButtonHeight,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    foregroundColor: DoryColors.primaryColor,
                     textStyle: Theme.of(context).textTheme.subtitle1,
                     backgroundColor: Colors.white,
-                    foregroundColor: DoryColors.primaryColor),
-                onPressed: () => Navigator.pop(context),
-                child: const Text('취소'),
-              ),
-            ),
-          ),
-          const SizedBox(width: smallSpace),
-          Expanded(
-            child: SizedBox(
-              height: submitButtonHeight,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  textStyle: Theme.of(context).textTheme.subtitle1,
+                  ),
+                  onPressed: () => Navigator.pop(context),
+                  child: const Text('취소'),
                 ),
-                onPressed: () => Navigator.pop(context, setDateTime),
-                child: Text(submitTitle),
               ),
             ),
-          ),
-        ],
-      )
-    ]);
+            const SizedBox(width: smallSpace),
+            Expanded(
+              child: SizedBox(
+                height: submitButtonHeight,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    textStyle: Theme.of(context).textTheme.subtitle1,
+                  ),
+                  onPressed: () => Navigator.pop(context, setDateTime),
+                  child: Text(submitTitle),
+                ),
+              ),
+            ),
+          ],
+        )
+      ],
+    );
   }
 }
