@@ -13,16 +13,16 @@ import '../bottomsheet/time_setting_bottomsheet.dart';
 import 'components/add_page_widget.dart';
 
 class AddAlarmPage extends StatelessWidget {
-  final File? medicineImage;
-  final String medicineName;
-
-  final service = AddMedicineService();
-
   AddAlarmPage({
     Key? key,
     required this.medicineImage,
     required this.medicineName,
   }) : super(key: key);
+
+  final File? medicineImage;
+  final String medicineName;
+
+  final service = AddMedicineService();
 
   @override
   Widget build(BuildContext context) {
@@ -105,14 +105,14 @@ class AddAlarmPage extends StatelessWidget {
 }
 
 class AlarmBox extends StatelessWidget {
-  final String time;
-  final AddMedicineService service;
-
   const AlarmBox({
     Key? key,
     required this.time,
     required this.service,
   }) : super(key: key);
+
+  final String time;
+  final AddMedicineService service;
 
   @override
   Widget build(BuildContext context) {
@@ -159,12 +159,12 @@ class AlarmBox extends StatelessWidget {
 }
 
 class AddAlarmButton extends StatelessWidget {
-  final AddMedicineService service;
-
   const AddAlarmButton({
     Key? key,
     required this.service,
   }) : super(key: key);
+
+  final AddMedicineService service;
 
   @override
   Widget build(BuildContext context) {

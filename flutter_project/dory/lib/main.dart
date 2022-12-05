@@ -3,9 +3,9 @@ import 'package:dory/pages/home_page.dart';
 import 'package:dory/repositories/dory_hive.dart';
 import 'package:dory/repositories/medicine_history_repository.dart';
 import 'package:dory/repositories/medicine_repository.dart';
-import 'package:dory/services/dory_notification_service.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'services/dory_notification_service.dart';
 
 final notification = DoryNotificationService();
 final hive = DoryHive();
@@ -31,6 +31,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: DoryThemes.lightTheme,
       home: const HomePage(),

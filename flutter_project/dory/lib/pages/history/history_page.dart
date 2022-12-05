@@ -45,12 +45,12 @@ class HistoryPage extends StatelessWidget {
 }
 
 class _TimeTile extends StatelessWidget {
-  final MedicineHistory history;
-
   const _TimeTile({
     Key? key,
     required this.history,
   }) : super(key: key);
+
+  final MedicineHistory history;
 
   @override
   Widget build(BuildContext context) {

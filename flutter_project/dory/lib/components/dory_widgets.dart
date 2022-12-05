@@ -4,9 +4,9 @@ import 'package:permission_handler/permission_handler.dart';
 import 'dory_constants.dart';
 
 class BottomSheetBody extends StatelessWidget {
-  final List<Widget> children;
-
   const BottomSheetBody({Key? key, required this.children}) : super(key: key);
+
+  final List<Widget> children;
 
   @override
   Widget build(BuildContext context) {

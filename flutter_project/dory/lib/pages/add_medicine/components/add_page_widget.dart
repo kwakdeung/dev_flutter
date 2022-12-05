@@ -3,10 +3,8 @@ import 'package:flutter/material.dart';
 import '../../../components/dory_constants.dart';
 
 class AddPageBody extends StatelessWidget {
-  final List<Widget> children;
-
   const AddPageBody({Key? key, required this.children}) : super(key: key);
-
+  final List<Widget> children;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -25,14 +23,14 @@ class AddPageBody extends StatelessWidget {
 }
 
 class BottomSubmitButton extends StatelessWidget {
-  final VoidCallback? onPressed;
-  final String text;
-
   const BottomSubmitButton({
     Key? key,
     required this.onPressed,
     required this.text,
   }) : super(key: key);
+
+  final VoidCallback? onPressed;
+  final String text;
 
   @override
   Widget build(BuildContext context) {

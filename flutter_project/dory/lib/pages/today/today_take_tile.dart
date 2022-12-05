@@ -13,12 +13,12 @@ import '../../main.dart';
 import 'image_detail_page.dart';
 
 class BeforeTakeTile extends StatelessWidget {
-  final MedicineAlarm medicineAlarm;
-
   const BeforeTakeTile({
     Key? key,
     required this.medicineAlarm,
   }) : super(key: key);
+
+  final MedicineAlarm medicineAlarm;
 
   @override
   Widget build(BuildContext context) {
@@ -101,14 +101,14 @@ class BeforeTakeTile extends StatelessWidget {
 }
 
 class AfterTakeTile extends StatelessWidget {
-  final MedicineAlarm medicineAlarm;
-  final MedicineHistory history;
-
   const AfterTakeTile({
     Key? key,
     required this.medicineAlarm,
     required this.history,
   }) : super(key: key);
+
+  final MedicineAlarm medicineAlarm;
+  final MedicineHistory history;
 
   @override
   Widget build(BuildContext context) {
@@ -212,12 +212,12 @@ class AfterTakeTile extends StatelessWidget {
 }
 
 class _MoreButton extends StatelessWidget {
-  final MedicineAlarm medicineAlarm;
-
   const _MoreButton({
     Key? key,
     required this.medicineAlarm,
   }) : super(key: key);
+
+  final MedicineAlarm medicineAlarm;
 
   @override
   Widget build(BuildContext context) {
@@ -231,12 +231,12 @@ class _MoreButton extends StatelessWidget {
 }
 
 class MedicineImageButton extends StatelessWidget {
-  final String? imagePath;
-
   const MedicineImageButton({
     Key? key,
     required this.imagePath,
   }) : super(key: key);
+
+  final String? imagePath;
 
   @override
   Widget build(BuildContext context) {
@@ -261,14 +261,14 @@ class MedicineImageButton extends StatelessWidget {
 }
 
 class TileActionButton extends StatelessWidget {
-  final VoidCallback onTap;
-  final String title;
-
   const TileActionButton({
     Key? key,
     required this.onTap,
     required this.title,
   }) : super(key: key);
+
+  final VoidCallback onTap;
+  final String title;
 
   @override
   Widget build(BuildContext context) {

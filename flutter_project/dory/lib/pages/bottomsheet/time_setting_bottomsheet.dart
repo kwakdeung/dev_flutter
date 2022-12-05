@@ -7,16 +7,16 @@ import '../../components/dory_constants.dart';
 import '../../components/dory_widgets.dart';
 
 class TimeSettingBottomSheet extends StatelessWidget {
-  final String initialTime;
-  final Widget? bottomWidget;
-  final String submitTitle;
-
   const TimeSettingBottomSheet({
     Key? key,
     required this.initialTime,
     this.submitTitle = '선택',
     this.bottomWidget,
   }) : super(key: key);
+
+  final String initialTime;
+  final Widget? bottomWidget;
+  final String submitTitle;
 
   @override
   Widget build(BuildContext context) {
@@ -49,8 +49,8 @@ class TimeSettingBottomSheet extends StatelessWidget {
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     foregroundColor: DoryColors.primaryColor,
-                    textStyle: Theme.of(context).textTheme.subtitle1,
                     backgroundColor: Colors.white,
+                    textStyle: Theme.of(context).textTheme.subtitle1,
                   ),
                   onPressed: () => Navigator.pop(context),
                   child: const Text('취소'),

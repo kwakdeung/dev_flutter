@@ -3,12 +3,12 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 
 class ImageDetailPage extends StatelessWidget {
-  final String imagePath;
-
   const ImageDetailPage({
     Key? key,
     required this.imagePath,
   }) : super(key: key);
+
+  final String imagePath;
 
   @override
   Widget build(BuildContext context) {

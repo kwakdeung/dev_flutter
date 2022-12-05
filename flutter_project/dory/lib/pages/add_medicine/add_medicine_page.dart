@@ -92,10 +92,10 @@ class _AddMedicinePageState extends State<AddMedicinePage> {
 }
 
 class _MedicineImageButton extends StatefulWidget {
-  final ValueChanged<File?> changeImageFile;
-
   const _MedicineImageButton({Key? key, required this.changeImageFile})
       : super(key: key);
+
+  final ValueChanged<File?> changeImageFile;
 
   @override
   State<_MedicineImageButton> createState() => _MedicineImageButtonState();
@@ -155,12 +155,12 @@ class _MedicineImageButtonState extends State<_MedicineImageButton> {
 }
 
 class PickImageBottomSheet extends StatelessWidget {
-  final VoidCallback onPressedCamera;
-  final VoidCallback onPressedGallery;
-
   const PickImageBottomSheet(
       {Key? key, required this.onPressedCamera, required this.onPressedGallery})
       : super(key: key);
+
+  final VoidCallback onPressedCamera;
+  final VoidCallback onPressedGallery;
 
   @override
   Widget build(BuildContext context) {
