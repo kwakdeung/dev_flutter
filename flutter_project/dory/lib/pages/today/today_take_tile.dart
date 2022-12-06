@@ -224,17 +224,49 @@ class _MoreButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return CupertinoButton(
       onPressed: () {
-        // medicineRepository.deleteMedicine(medicineAlarm.key);
         showModalBottomSheet(
             context: context,
             builder: (context) => MoreActionBottomSheet(
                   onPressedModify: () {},
-                  onPressedDeleteOnlyMedicine: () {},
-                  onPressedDeleteAll: () {},
+                  onPressedDeleteOnlyMedicine: () {
+                    // 1. 알람삭제
+                    notification.deleteMultipleAlarm(alarmIds);
+                    // 2. hive 데이터 삭제
+                    medicineRepository.deleteMedicine(medicineAlarm.key);
+                    // 3. pop
+                    Navigator.pop(context);
+                  },
+                  onPressedDeleteAll: () {
+                    // 1. 알람삭제
+                    notification.deleteMultipleAlarm(alarmIds);
+                    // 2. hive history 데이터 삭제
+                    historyRepository.deleteAllHistory(keys);
+                    // 3. hive medicine 데이터 삭제
+                    medicineRepository.deleteMedicine(medicineAlarm.key);
+                    // 4. pop
+                    Navigator.pop(context);
+                  },
                 ));
       },
       child: const Icon(CupertinoIcons.ellipsis_vertical),
     );
+  }
+
+  List<String> get alarmIds {
+    final medicine = medicineRepository.medicineBox.values
+        .singleWhere((element) => element.id == medicineAlarm.id);
+    final alarmIdList = medicine.alarms
+        .map((alarmStr) => notification.alarmId(medicineAlarm.id, alarmStr))
+        .toList();
+    return alarmIdList;
+  }
+
+  Iterable<int> get keys {
+    final histories = historyRepository.historyBox.values.where((history) =>
+        history.medicineId == medicineAlarm.id &&
+        history.medicineKey == medicineAlarm.key);
+    final keys = histories.map((e) => e.key as int);
+    return keys;
   }
 }
 
