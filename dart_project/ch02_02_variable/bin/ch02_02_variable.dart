@@ -1,4 +1,4 @@
-// ch02_02_variable
+// ch02_02_variable 3번
 
 void main() {}
 
@@ -30,8 +30,8 @@ void basic1Variable() {
 void basic2String() {
   // 2. 변수 타입
   // 문자열 값 = String
-  String name = 'Bora';
-  String nickname = 'Dabo';
+  String name = 'Junyeong';
+  String nickname = 'Kwakdeung';
 
   print(name);
   print(nickname);
