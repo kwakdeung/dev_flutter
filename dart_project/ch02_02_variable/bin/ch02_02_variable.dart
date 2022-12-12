@@ -89,7 +89,7 @@ void basic4Boolean() {
   print('isTrue = 4 > 10 => $isTrue');
 
   bool isTrue2 = (4 == 10);
-  print('isTrue2 = 4 > 10 => $isTrue2');
+  print('isTrue2 = 4 == 10 => $isTrue2');
   // 변수 규칙 1. 기존 선언되었던 이름으로 중복해서 선언할 수 없다.(unique)
   // 변수 규칙 2. 변수명은 소문자로 시작, 띄어쓰기가 안된다.  카멜 표기법으로 작성한다.
   // 띄어쓰기가 필요하다면 첫단어 대문자로 표기 = 카멜 표기법 (eg. isShowTrue)
