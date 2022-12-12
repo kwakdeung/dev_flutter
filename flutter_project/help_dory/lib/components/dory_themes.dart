@@ -9,7 +9,6 @@ class DoryThemes {
         splashColor: Colors.white,
         textTheme: _textTheme,
         brightness: Brightness.light,
-        useMaterial3: true,
       );
 
   static ThemeData get darkTheme => ThemeData(
@@ -19,7 +18,6 @@ class DoryThemes {
         splashColor: Colors.white,
         textTheme: _textTheme,
         brightness: Brightness.dark,
-        useMaterial3: true,
       );
 
   static const TextTheme _textTheme = TextTheme(
