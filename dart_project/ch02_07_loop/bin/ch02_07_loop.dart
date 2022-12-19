@@ -1,4 +1,4 @@
-// ch02_07_loop
+// ch02_07_loop 3번
 
 import 'dart:math';
 
