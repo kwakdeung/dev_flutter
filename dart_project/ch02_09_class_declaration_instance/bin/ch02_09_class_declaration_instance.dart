@@ -1,4 +1,4 @@
-// ch02_09_class_declaration_instance
+// ch02_09_class_declaration_instance 3번
 
 void main() {
   print('class 공부');
