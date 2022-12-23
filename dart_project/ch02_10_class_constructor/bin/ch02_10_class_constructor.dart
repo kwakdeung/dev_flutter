@@ -1,4 +1,4 @@
-// ch02_10_class_constructor
+// ch02_10_class_constructor 3번
 
 void main() {
   print('class 공부');
