@@ -1,4 +1,4 @@
-// ch02_11_getter_setter_restricted_access
+// ch02_11_getter_setter_restricted_access 3번
 
 import 'class/student.dart';
 
