@@ -1,4 +1,4 @@
-// ch02_14_enum
+// ch02_14_enum 3번
 
 enum Status {
   approved, // 승인
