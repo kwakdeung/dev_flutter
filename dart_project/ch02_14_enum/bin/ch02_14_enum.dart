@@ -6,7 +6,7 @@ enum Status {
   rejected, // 거절
 }
 
-void main(List<String> arguments) {
+void main() {
   Status status = Status.approved;
 
   if (status == Status.approved) {
