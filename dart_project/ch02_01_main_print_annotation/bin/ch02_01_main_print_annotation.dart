@@ -1,4 +1,4 @@
-// ch02_01_main_print_annotation 3번
+// ch02_01_main_print_annotation 4번
 
 // 1. main 함수 형태
 // void main() {}
